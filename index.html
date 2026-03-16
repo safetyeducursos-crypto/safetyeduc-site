@@ -786,11 +786,20 @@ async function cadastrar(){
     const data = await res.json();
     if(!res.ok) throw new Error(data.erro||'Erro ao criar conta');
 
-    ok.innerHTML = `✅ <strong>Conta criada com sucesso!</strong><br>
-      Acesse agora: <a href="https://nr-capacita.onrender.com" target="_blank" style="color:var(--gold);font-weight:700">nr-capacita.onrender.com</a><br>
-      <span style="font-size:12px;opacity:.8">Login: <strong>${cpfDigits}</strong> · Senha: <strong>${cpfDigits}</strong></span>`;
+    ok.innerHTML = `
+      <div style="margin-bottom:16px">
+        <div style="font-size:16px;font-weight:700;margin-bottom:4px">✅ Conta criada com sucesso!</div>
+        <div style="font-size:13px;opacity:.8">Use seu CPF como login e senha para entrar.</div>
+      </div>
+      <a href="https://nr-capacita.onrender.com" 
+        style="display:block;padding:16px;background:var(--gold);color:#000;border-radius:10px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:18px;letter-spacing:1px;text-transform:uppercase;text-decoration:none;text-align:center">
+        🎓 Acessar o curso aqui →
+      </a>`;
     ok.style.display='block';
     btn.style.display='none';
+
+    // Redireciona automaticamente após 3 segundos
+    setTimeout(()=>{ window.location.href='https://nr-capacita.onrender.com'; }, 3000);
   } catch(e){
     err.textContent = e.message==='Failed to fetch'
       ? 'Servidor indisponível. Tente novamente em instantes.'
