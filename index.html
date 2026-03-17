@@ -302,7 +302,10 @@ footer{background:var(--bg2);border-top:1px solid var(--gray3);padding:60px 5% 3
     <a href="#planos">Planos Empresa</a>
     <a href="#como-funciona">Como Funciona</a>
     <a href="#faq">FAQ</a>
-    <a href="https://nr-capacita.onrender.com" target="_blank" style="color:rgba(255,255,255,.65);text-decoration:none;font-size:13px;font-weight:600;letter-spacing:.3px;transition:color .2s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='rgba(255,255,255,.65)'">Já sou aluno →</a><a href="#checkout" class="nav-btn">Estudar Grátis →</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:14px;">
+    <a href="https://nr-capacita.onrender.com" target="_blank" style="color:rgba(255,255,255,.65);text-decoration:none;font-size:13px;font-weight:600;letter-spacing:.3px;transition:color .2s;white-space:nowrap;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='rgba(255,255,255,.65)'">Já sou aluno →</a>
+    <a href="#checkout" class="nav-btn">Estudar Grátis →</a>
   </div>
 </nav>
 
@@ -697,12 +700,30 @@ footer{background:var(--bg2);border-top:1px solid var(--gray3);padding:60px 5% 3
           <div class="form-h">Cadastro gratuito</div>
           <div class="form-sub">Seu CPF será seu login e senha de acesso à plataforma</div>
           <div class="fg">
-            <label>Qual curso você quer fazer?</label>
-            <select id="sel-curso">
-              <option value="">Selecione o curso...</option>
-              <option value="1">NR-10 — Segurança em Eletricidade</option>
-              <option value="2">NR-35 — Trabalho em Altura</option>
-            </select>
+            <label>Quais cursos você quer fazer? <span style="font-weight:400;color:rgba(255,255,255,.35)">(selecione um ou mais)</span></label>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px;">
+              <label style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);border-radius:8px;padding:12px 14px;cursor:pointer;transition:all .2s;" id="lbl-nr10">
+                <input type="checkbox" id="chk-nr10" value="nr10" onchange="toggleCurso()" style="width:18px;height:18px;accent-color:var(--gold);cursor:pointer;flex-shrink:0;">
+                <div>
+                  <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:.3px;">⚡ NR-10 — Segurança em Eletricidade</div>
+                  <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:2px;">40h · 5 módulos · Para eletricistas e operadores</div>
+                </div>
+              </label>
+              <label style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);border-radius:8px;padding:12px 14px;cursor:pointer;transition:all .2s;" id="lbl-nr11">
+                <input type="checkbox" id="chk-nr11" value="nr11" onchange="toggleCurso()" style="width:18px;height:18px;accent-color:var(--gold);cursor:pointer;flex-shrink:0;">
+                <div>
+                  <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:.3px;">📦 NR-11 — Operador de Empilhadeira</div>
+                  <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:2px;">16h · 4 módulos · Para operadores de empilhadeira</div>
+                </div>
+              </label>
+              <label style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);border-radius:8px;padding:12px 14px;cursor:pointer;transition:all .2s;" id="lbl-nr35">
+                <input type="checkbox" id="chk-nr35" value="nr35" onchange="toggleCurso()" style="width:18px;height:18px;accent-color:var(--gold);cursor:pointer;flex-shrink:0;">
+                <div>
+                  <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:.3px;">🏗️ NR-35 — Trabalho em Altura</div>
+                  <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:2px;">8h · 4 módulos · Para trabalho acima de 2 metros</div>
+                </div>
+              </label>
+            </div>
           </div>
           <div class="fg"><label>Nome completo</label><input id="cad-nome" type="text" placeholder="Seu nome completo"></div>
           <div class="fr">
@@ -790,7 +811,19 @@ const LINKS={
 // ── URL da plataforma — altere se mudar o domínio
 const API_URL = 'https://nr-capacita.onrender.com/api';
 
-function sel(c){ document.getElementById('sel-curso').value=c; }
+function sel(c){
+  const map={'nr10':'chk-nr10','nr11':'chk-nr11','nr35':'chk-nr35'};
+  if(map[c]) document.getElementById(map[c]).checked=true;
+  toggleCurso();
+}
+function toggleCurso(){
+  ['nr10','nr11','nr35'].forEach(id=>{
+    const chk=document.getElementById('chk-'+id);
+    const lbl=document.getElementById('lbl-'+id);
+    if(lbl) lbl.style.borderColor=chk.checked?'var(--gold)':'rgba(255,255,255,.08)';
+    if(lbl) lbl.style.background=chk.checked?'rgba(245,200,0,.08)':'rgba(255,255,255,.04)';
+  });
+}
 function selPlano(p){ document.getElementById('sel-curso').value=''; document.getElementById('checkout').scrollIntoView({behavior:'smooth'}); }
 
 function mascaraCPF(el){
@@ -805,7 +838,8 @@ function mascaraTel(el){
 }
 
 async function cadastrar(){
-  const curso = document.getElementById('sel-curso').value;
+  const cursosSel = ['nr10','nr11','nr35'].filter(id=>document.getElementById('chk-'+id)?.checked);
+  const curso = cursosSel.join('_') || '';
   const nome  = document.getElementById('cad-nome').value.trim();
   const cpf   = document.getElementById('cad-cpf').value.trim();
   const tel   = document.getElementById('cad-tel').value.trim();
@@ -817,7 +851,7 @@ async function cadastrar(){
 
   err.style.display='none'; ok.style.display='none';
 
-  if(!curso){ err.textContent='Selecione um curso.'; err.style.display='block'; return; }
+  if(!curso){ err.textContent='Selecione pelo menos um curso.'; err.style.display='block'; return; }
   if(!nome){ err.textContent='Informe seu nome completo.'; err.style.display='block'; return; }
   const cpfDigits = cpf.replace(/\D/g,'');
   if(cpfDigits.length!==11){ err.textContent='CPF inválido — digite os 11 dígitos.'; err.style.display='block'; return; }
