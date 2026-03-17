@@ -151,8 +151,8 @@ section{padding:96px 5%;position:relative}
 .curso-lista li::before{content:'→';color:var(--gold);font-weight:700;flex-shrink:0}
 .curso-footer{border-top:1px solid rgba(255,255,255,.06);padding-top:20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .curso-preco-group{}
-.curso-preco-from{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.3)}
-.curso-preco-val{font-family:'Bebas Neue',sans-serif;font-size:40px;letter-spacing:1px;color:var(--gold);line-height:1}
+.curso-preco-from{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.3);margin-bottom:4px}
+.curso-preco-val{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:800;letter-spacing:1px;color:var(--gold);line-height:1.2}
 .curso-preco-val span{font-size:20px}
 .curso-preco-note{font-size:11px;color:rgba(255,255,255,.3);margin-top:2px}
 .btn-curso-primary{background:var(--gold);color:#000;padding:13px 26px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:16px;letter-spacing:.5px;text-transform:uppercase;text-decoration:none;transition:all .2s;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
@@ -324,7 +324,7 @@ footer{background:var(--bg2);border-top:1px solid var(--gray3);padding:60px 5% 3
         <em class="line2">totalmente grátis</em>
         <span class="line3">Pague só se quiser o certificado</span>
       </h1>
-      <p class="hero-desc">Acesse o conteúdo completo de NR-10 e NR-35 <strong>sem pagar nada</strong>. Quando concluir, emita o certificado digital com validade legal por uma taxa única.</p>
+      <p class="hero-desc">Acesse o conteúdo completo de NR-10, NR-11 e NR-35 <strong>sem pagar nada</strong>. Quando concluir, emita o certificado digital com validade legal por uma taxa única.</p>
       <div class="hero-actions">
         <a href="#cursos" class="btn-hero-primary">Ver cursos disponíveis →</a>
         <a href="#planos" class="btn-hero-secondary">Planos para empresa</a>
@@ -347,7 +347,6 @@ footer{background:var(--bg2);border-top:1px solid var(--gray3);padding:60px 5% 3
     <div class="hero-visual">
       <div class="hero-card-main">
         <div class="hero-card-top">
-          <div class="hero-floating-badge">NR-35 Atualizada 2025 ✓</div>
           <div class="hero-card-badge">Cursos disponíveis agora</div>
           <div class="hero-card-title">Plataforma SafetyEduc</div>
           <div class="hero-card-sub">Cadastre-se grátis — acesso imediato</div>
@@ -362,12 +361,20 @@ footer{background:var(--bg2);border-top:1px solid var(--gray3);padding:60px 5% 3
             <div class="hc-price" style="color:#6dffb0;font-size:16px">GRÁTIS</div>
           </div>
           <div class="hc-item">
+            <div class="hc-icon" style="background:rgba(255,165,0,.1);border:1px solid rgba(255,165,0,.2)">📦</div>
+            <div class="hc-info">
+              <div class="hc-name">NR-11 — Operador de Empilhadeira</div>
+              <div class="hc-meta">16h · 4 módulos · Certificado incluso</div>
+            </div>
+            <div class="hc-price" style="color:#6dffb0;font-size:16px">GRÁTIS</div>
+          </div>
+          <div class="hc-item">
             <div class="hc-icon height">🏗️</div>
             <div class="hc-info">
               <div class="hc-name">NR-35 — Trabalho em Altura</div>
               <div class="hc-meta">8h · 4 módulos · Certificado incluso</div>
             </div>
-            <div class="hc-price">R$00</div>
+            <div class="hc-price" style="color:#6dffb0;font-size:16px">GRÁTIS</div>
           </div>
         </div>
         <a href="#checkout" class="hero-card-cta">Começar grátis agora →</a>
@@ -389,11 +396,11 @@ footer{background:var(--bg2);border-top:1px solid var(--gray3);padding:60px 5% 3
       <div class="reveal-left">
         <p class="section-kicker">Por que SafetyEduc</p>
         <h2 class="section-h">Treinamento <em>sério</em> de quem entende de segurança</h2>
-        <p class="section-sub" style="margin-bottom:36px">Desenvolvido por técnicos de segurança do trabalho habilitados, com conteúdo atualizado conforme as portarias mais recentes.</p>
+        <p class="section-sub" style="margin-bottom:36px">Desenvolvido por profissionais com proficiência nas áreas de atuação, com conteúdo atualizado conforme as portarias mais recentes.</p>
         <div class="porque-cards">
           <div class="pq-card">
             <div class="pq-icon">📋</div>
-            <div><div class="pq-h">Conteúdo alinhado com as normas vigentes</div><p class="pq-p">NR-35 atualizada com a Portaria MTE 1.680/2025. Conteúdo revisado por profissionais habilitados.</p></div>
+            <div><div class="pq-h">Conteúdo alinhado com as normas vigentes</div><p class="pq-p">NR-10, NR-11 e NR-35 com conteúdo atualizado conforme as portarias vigentes. Revisado por profissionais habilitados.</p></div>
           </div>
           <div class="pq-card">
             <div class="pq-icon">🏆</div>
@@ -401,7 +408,7 @@ footer{background:var(--bg2);border-top:1px solid var(--gray3);padding:60px 5% 3
           </div>
           <div class="pq-card">
             <div class="pq-icon">📊</div>
-            <div><div class="pq-h">Gestão centralizada de treinamentos</div><p class="pq-p">Administradores acompanham o progresso de cada colaborador, gerenciam certificados e liberam cursos individualmente.</p></div>
+            <div><div class="pq-h">100% online — sem horário fixo</div><p class="pq-p">Faça no celular, tablet ou computador. Pause e retome quando quiser, no seu ritmo.</p></div>
           </div>
         </div>
       </div>
@@ -412,6 +419,10 @@ footer{background:var(--bg2);border-top:1px solid var(--gray3);padding:60px 5% 3
           <div class="pa-item">
             <div class="pa-nr">NR-10</div>
             <div class="pa-info"><div class="pa-info-title">Segurança em Eletricidade</div><div class="pa-info-desc">Obrigatório para todo trabalhador que atue em instalações elétricas. Portaria MTb 3.214/78.</div></div>
+          </div>
+          <div class="pa-item">
+            <div class="pa-nr">NR-11</div>
+            <div class="pa-info"><div class="pa-info-title">Operador de Empilhadeira</div><div class="pa-info-desc">Obrigatório para todo operador de empilhadeira e equipamentos de movimentação. Portaria MTb 3.214/78.</div></div>
           </div>
           <div class="pa-item">
             <div class="pa-nr">NR-35</div>
@@ -429,7 +440,7 @@ footer{background:var(--bg2);border-top:1px solid var(--gray3);padding:60px 5% 3
   <div class="section-inner">
     <p class="section-kicker">Nossos cursos</p>
     <h2 class="section-h">Estude <em>grátis</em>, certifique quando quiser</h2>
-    <p class="section-sub">Acesso gratuito e ilimitado ao conteúdo. Pague apenas a taxa do certificado quando concluir.</p>
+    <p class="section-sub">Acesso gratuito ao conteúdo completo. Pague apenas a taxa do certificado quando concluir.</p>
     <div class="cursos-grid reveal">
       <!-- NR-10 -->
       <div class="curso-card">
@@ -468,11 +479,11 @@ footer{background:var(--bg2);border-top:1px solid var(--gray3);padding:60px 5% 3
 
       <!-- NR-11 -->
       <div class="curso-card" id="nr11">
-        <div class="curso-card-header" style="position:relative">
-          <span class="curso-emoji">🏭</span>
+        <div class="curso-header">
+          <span class="curso-em">📦</span>
           <div class="curso-nr-tag">NR-11 · Operador de Empilhadeira</div>
-          <div class="curso-h">Transporte, Movimentação, Armazenagem e Manuseio de Materiais</div>
-          <div class="curso-sub">Para operadores de empilhadeira, transpaleteiras e equipamentos de movimentação de materiais</div>
+          <div class="curso-h">Operador de Empilhadeira</div>
+          <div class="curso-sub">Para operadores de empilhadeira, transpaleteiras e equipamentos de movimentação</div>
         </div>
         <div class="curso-divider"></div>
         <div class="curso-body">
@@ -545,7 +556,7 @@ footer{background:var(--bg2);border-top:1px solid var(--gray3);padding:60px 5% 3
   <div class="section-inner">
     <p class="section-kicker">Planos para empresa</p>
     <h2 class="section-h">Treine toda a equipe <em>com desconto</em></h2>
-    <p class="section-sub">Gestão centralizada com painel administrativo completo e alertas de vencimento de certificados.</p>
+    <p class="section-sub">Ideal para empresas que precisam treinar múltiplos colaboradores com controle centralizado.</p>
     <div class="planos-grid reveal">
       <div class="plano-card">
         <div class="plano-icon">🏢</div>
@@ -585,7 +596,7 @@ footer{background:var(--bg2);border-top:1px solid var(--gray3);padding:60px 5% 3
         <button class="btn-plano btn-plano-gold" onclick="abrirWhatsApp('Profissional')">💬 Falar no WhatsApp</button>
       </div>
       <div class="plano-card">
-        <div class="plano-icon">🏭</div>
+        <div class="plano-icon">📦</div>
         <div class="plano-nome">Enterprise</div>
         <div class="plano-desc">Para grandes operações</div>
         
@@ -652,9 +663,9 @@ footer{background:var(--bg2);border-top:1px solid var(--gray3);padding:60px 5% 3
       <div class="depo-card">
         <div class="depo-quote">"</div>
         <div class="depo-stars"><span class="depo-star">★</span><span class="depo-star">★</span><span class="depo-star">★</span><span class="depo-star">★</span><span class="depo-star">★</span></div>
-        <p class="depo-txt">O painel de administrador é excelente. Consigo ver quem terminou, quem está atrasado e emitir todos os certificados de uma vez para a auditoria.</p>
+        <p class="depo-txt">Fiz o curso de NR-35 no celular durante os intervalos. Em dois dias terminei tudo e recebi meu certificado rapidinho. Conteúdo muito completo e fácil de entender.</p>
         <div class="depo-sep"></div>
-        <div class="depo-autor"><div class="depo-av">AP</div><div><div class="depo-nome">Ana Paula S.</div><div class="depo-cargo">Analista de RH · Construtora</div></div></div>
+        <div class="depo-autor"><div class="depo-av">AP</div><div><div class="depo-nome">Ana Paula S.</div><div class="depo-cargo">Técnica de Segurança · Construtora</div></div></div>
       </div>
       <div class="depo-card">
         <div class="depo-quote">"</div>
@@ -740,6 +751,7 @@ footer{background:var(--bg2);border-top:1px solid var(--gray3);padding:60px 5% 3
       <div class="footer-col">
         <div class="footer-col-h">Cursos</div>
         <a href="#nr10">NR-10 — Eletricidade</a>
+        <a href="#nr11">NR-11 — Operador de Empilhadeira</a>
         <a href="#nr35">NR-35 — Trabalho em Altura</a>
         <a href="#planos">Planos Empresa</a>
       </div>
