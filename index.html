@@ -824,7 +824,7 @@ function toggleCurso(){
     if(lbl) lbl.style.background=chk.checked?'rgba(245,200,0,.08)':'rgba(255,255,255,.04)';
   });
 }
-function selPlano(p){ document.getElementById('sel-curso').value=''; document.getElementById('checkout').scrollIntoView({behavior:'smooth'}); }
+function selPlano(p){ document.getElementById('checkout').scrollIntoView({behavior:'smooth'}); }
 
 function mascaraCPF(el){
   let v=el.value.replace(/\D/g,'').slice(0,11);
@@ -863,7 +863,7 @@ async function cadastrar(){
     const res = await fetch(API_URL+'/cadastro-publico',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ nome, cpf, telefone: tel, email, empresa: emp, curso_id: parseInt(curso) })
+      body: JSON.stringify({ nome, cpf, telefone: tel, email, empresa: emp, curso_id: curso })
     });
     const data = await res.json();
     if(!res.ok) throw new Error(data.erro||'Erro ao criar conta');
