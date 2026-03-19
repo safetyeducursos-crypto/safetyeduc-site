@@ -1483,6 +1483,35 @@
       color: var(--white)
     }
 
+    /* Seleção de Cursos */
+    .course-opts {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 8px
+    }
+    .course-opt {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, .04);
+      border: 1.5px solid rgba(255, 255, 255, .08);
+      border-radius: 8px;
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: all .2s;
+      position: relative
+    }
+    .course-opt:hover {
+      background: rgba(255, 255, 255, .08);
+      border-color: rgba(255, 255, 255, .2)
+    }
+    .course-opt.selected {
+      background: rgba(245, 200, 0, .1);
+      border-color: var(--gold)
+    }
+    .course-opt input { width: 18px; height: 18px; accent-color: var(--gold); cursor: pointer; flex-shrink: 0 }
+
     .fr {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -2319,44 +2348,26 @@
             <div class="fg">
               <label>Quais cursos você quer fazer? <span style="font-weight:400;color:rgba(255,255,255,.35)">(selecione
                   um ou mais)</span></label>
-              <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px;">
-                <label
-                  style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);border-radius:8px;padding:12px 14px;cursor:pointer;transition:all .2s;"
-                  id="lbl-nr10">
-                  <input type="checkbox" id="chk-nr10" value="nr10" onchange="toggleCurso()"
-                    style="width:18px;height:18px;accent-color:var(--gold);cursor:pointer;flex-shrink:0;">
+              <div class="course-opts">
+                <label class="course-opt" id="lbl-nr10">
+                  <input type="checkbox" id="chk-nr10" value="nr10" onchange="toggleCurso()">
                   <div>
-                    <div
-                      style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:.3px;">
-                      ⚡ NR-10 — Segurança em Eletricidade</div>
-                    <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:2px;">40h · 5 módulos · Para
-                      eletricistas e operadores</div>
+                    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:.3px;">⚡ NR-10 — Segurança em Eletricidade</div>
+                    <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:2px;">40h · 5 módulos · Para eletricistas e operadores</div>
                   </div>
                 </label>
-                <label
-                  style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);border-radius:8px;padding:12px 14px;cursor:pointer;transition:all .2s;"
-                  id="lbl-nr11">
-                  <input type="checkbox" id="chk-nr11" value="nr11" onchange="toggleCurso()"
-                    style="width:18px;height:18px;accent-color:var(--gold);cursor:pointer;flex-shrink:0;">
+                <label class="course-opt" id="lbl-nr11">
+                  <input type="checkbox" id="chk-nr11" value="nr11" onchange="toggleCurso()">
                   <div>
-                    <div
-                      style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:.3px;">
-                      📦 NR-11 — Operador de Empilhadeira</div>
-                    <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:2px;">16h · 4 módulos · Para
-                      operadores de empilhadeira</div>
+                    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:.3px;">📦 NR-11 — Operador de Empilhadeira</div>
+                    <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:2px;">16h · 4 módulos · Para operadores de empilhadeira</div>
                   </div>
                 </label>
-                <label
-                  style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);border-radius:8px;padding:12px 14px;cursor:pointer;transition:all .2s;"
-                  id="lbl-nr35">
-                  <input type="checkbox" id="chk-nr35" value="nr35" onchange="toggleCurso()"
-                    style="width:18px;height:18px;accent-color:var(--gold);cursor:pointer;flex-shrink:0;">
+                <label class="course-opt" id="lbl-nr35">
+                  <input type="checkbox" id="chk-nr35" value="nr35" onchange="toggleCurso()">
                   <div>
-                    <div
-                      style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:.3px;">
-                      🏗️ NR-35 — Trabalho em Altura</div>
-                    <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:2px;">8h · 4 módulos · Para
-                      trabalho acima de 2 metros</div>
+                    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:.3px;">🏗️ NR-35 — Trabalho em Altura</div>
+                    <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:2px;">8h · 4 módulos · Para trabalho acima de 2 metros</div>
                   </div>
                 </label>
               </div>
@@ -2488,8 +2499,7 @@
       ['nr10', 'nr11', 'nr35'].forEach(id => {
         const chk = document.getElementById('chk-' + id);
         const lbl = document.getElementById('lbl-' + id);
-        if (lbl) lbl.style.borderColor = chk.checked ? 'var(--gold)' : 'rgba(255,255,255,.08)';
-        if (lbl) lbl.style.background = chk.checked ? 'rgba(245,200,0,.08)' : 'rgba(255,255,255,.04)';
+        if (lbl) { if (chk.checked) lbl.classList.add('selected'); else lbl.classList.remove('selected'); }
       });
     }
 
