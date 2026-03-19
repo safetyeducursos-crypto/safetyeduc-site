@@ -1751,11 +1751,21 @@
         height: 30px
       }
 
+      /* Ajustes finos de espaçamento e tipografia para Mobile */
+      section { padding: 60px 5% }
+      .hero { padding-top: 100px; padding-bottom: 60px; min-height: auto }
+      .hero h1 { font-size: 48px }
+      .section-h { font-size: 36px }
+      .checkout-left h2 { font-size: 42px }
+      
+      /* Grid Reset para 1 coluna */
       .hero-inner,
       .porque-grid,
       .checkout-grid,
       .footer-grid {
         grid-template-columns: 1fr
+        grid-template-columns: 1fr;
+        gap: 40px
       }
 
       .cursos-grid,
