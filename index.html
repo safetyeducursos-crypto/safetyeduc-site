@@ -1751,19 +1751,29 @@
         height: 30px
       }
 
+      /* Ajustes Gerais para Celular */
       /* Ajustes finos de espaçamento e tipografia para Mobile */
-      section { padding: 60px 5% }
-      .hero { padding-top: 100px; padding-bottom: 60px; min-height: auto }
-      .hero h1 { font-size: 48px }
-      .section-h { font-size: 36px }
-      .checkout-left h2 { font-size: 42px }
+      section { padding: 40px 20px }
+      .hero { padding-top: 84px; padding-bottom: 40px; min-height: auto }
+      .hero h1 { font-size: 40px; margin-bottom: 16px }
+      .hero-desc { font-size: 15px; margin-bottom: 24px }
+      .section-h { font-size: 32px }
+      .checkout-left h2 { font-size: 36px }
+
+      /* Otimização de espaço dentro dos cards */
+      .plano-card, .curso-card, .depo-card, .faq-item, .checkout-form { padding: 20px }
+      .hero-card-top { padding: 20px }
+      .hero-courses { padding: 10px 20px }
+      
+      /* Botões grandes para toque fácil */
+      .hero-actions { flex-direction: column; gap: 12px; margin-bottom: 32px }
+      .btn-hero-primary, .btn-hero-secondary { width: 100%; justify-content: center; padding: 14px 20px; text-align: center; }
       
       /* Grid Reset para 1 coluna */
       .hero-inner,
       .porque-grid,
       .checkout-grid,
       .footer-grid {
-        grid-template-columns: 1fr
         grid-template-columns: 1fr;
         gap: 40px
       }
@@ -1774,10 +1784,6 @@
       .faq-grid,
       .como-steps {
         grid-template-columns: 1fr
-      }
-
-      .como-steps {
-        grid-template-columns: 1fr 1fr
       }
 
       .como-steps::before {
@@ -1794,6 +1800,11 @@
       .fr {
         grid-template-columns: 1fr
       }
+
+      /* Ajuste dos números no topo para não quebrar linha */
+      .hero-nums { justify-content: space-between; gap: 10px }
+      .hero-num-item { padding: 0; border: none; flex: 1; text-align: left }
+      .hero-num-val { font-size: 32px }
     }
   </style>
 </head>
