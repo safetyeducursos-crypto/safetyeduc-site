@@ -1884,7 +1884,7 @@
           <em class="line2">totalmente grátis</em>
           <span class="line3">Pague só se quiser o certificado</span>
         </h1>
-        <p class="hero-desc">Acesse o conteúdo completo de NR-10, NR-11, NR-33 e NR-35 <strong>sem pagar nada</strong>. Quando
+        <p class="hero-desc">Acesse o conteúdo completo de NR-10, NR-11, NR-33, NR-34 e NR-35 <strong>sem pagar nada</strong>. Quando
           concluir, emita o certificado digital com validade legal por uma taxa única.</p>
         <div class="hero-actions">
           <a href="#cursos" class="btn-hero-primary">Ver cursos disponíveis →</a>
@@ -1953,6 +1953,14 @@
               </div>
               <div class="hc-price" style="color:#6dffb0;font-size:16px">GRÁTIS</div>
             </div>
+            <div class="hc-item">
+              <div class="hc-icon" style="background:rgba(0,100,160,.1);border:1px solid rgba(0,100,160,.3)">⚓</div>
+              <div class="hc-info">
+                <div class="hc-name">NR-34 — Construção Naval / Serviços a Quente</div>
+                <div class="hc-meta">12h · 6 módulos</div>
+              </div>
+              <div class="hc-price" style="color:#6dffb0;font-size:16px">GRÁTIS</div>
+            </div>
           </div>
           <a href="#checkout" class="hero-card-cta">Começar grátis agora →</a>
         </div>
@@ -1980,7 +1988,7 @@
               <div class="pq-icon">📋</div>
               <div>
                 <div class="pq-h">Conteúdo alinhado com as normas vigentes</div>
-                <p class="pq-p">NR-10, NR-11, NR-33 e NR-35 com conteúdo atualizado conforme as portarias vigentes. Revisado
+                <p class="pq-p">NR-10, NR-11, NR-33, NR-34 e NR-35 com conteúdo atualizado conforme as portarias vigentes. Revisado
                   por profissionais habilitados.</p>
               </div>
             </div>
@@ -2034,6 +2042,13 @@
                 <div class="pa-info-title">Trabalho em Altura</div>
                 <div class="pa-info-desc">Obrigatório para atividades acima de 2m com risco de queda. Atualizada em
                   out/2025.</div>
+              </div>
+            </div>
+            <div class="pa-item">
+              <div class="pa-nr">NR-34</div>
+              <div class="pa-info">
+                <div class="pa-info-title">Construção e Reparação Naval</div>
+                <div class="pa-info-desc">Obrigatório para trabalhadores da indústria naval, incluindo serviços a quente, jateamento e andaimes. Portaria MTb 3.214/78.</div>
               </div>
             </div>
             <div class="pa-warn">🚨 Empresas sem documentação de treinamento ficam expostas a interdição, multas do MTE
@@ -2227,6 +2242,42 @@
                 <div class="curso-preco-note">Certificado por taxa única · Acesso ilimitado</div>
               </div>
               <a href="#checkout" class="btn-curso-primary" onclick="sel('nr35')">Começar grátis →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- NR-34 -->
+        <div class="curso-card hot" id="nr34">
+          <div class="curso-hot-tag">Novo 2025</div>
+          <div class="curso-header">
+            <span class="curso-em">⚓</span>
+            <div class="curso-nr-tag">NR-34 · Construção Naval</div>
+            <div class="curso-h">Serviços a Quente</div>
+            <div class="curso-sub">Para trabalhadores da indústria de construção, reparação e desmonte naval</div>
+          </div>
+          <div class="curso-divider"></div>
+          <div class="curso-body">
+            <div class="curso-chips">
+              <span class="chip gold">12 horas</span>
+              <span class="chip">6 módulos</span>
+              <span class="chip">30 questões</span>
+              <span class="chip">Certificado</span>
+            </div>
+            <ul class="curso-lista">
+              <li>Trabalho a quente — soldagem, goivagem e esmerilhamento</li>
+              <li>Jateamento e hidrojateamento — medidas de proteção</li>
+              <li>Montagem e desmontagem de andaimes na indústria naval</li>
+              <li>Movimentação de cargas — sinaleiro e operador de guindar</li>
+              <li>APR, Permissão de Trabalho (PT) e Diálogo Diário de Segurança</li>
+              <li>Plano de Respostas às Emergências (PRE)</li>
+            </ul>
+            <div class="curso-footer">
+              <div class="curso-preco-group">
+                <div class="curso-preco-from">acesso ao curso</div>
+                <div class="curso-preco-val" style="color:#6dffb0">GRÁTIS</div>
+                <div class="curso-preco-note">Certificado por taxa única · Validade 1 ano</div>
+              </div>
+              <a href="#checkout" class="btn-curso-primary" onclick="sel('nr34')">Começar grátis →</a>
             </div>
           </div>
         </div>
@@ -2478,6 +2529,13 @@
                     <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:2px;">8h · 4 módulos · Para trabalho acima de 2 metros</div>
                   </div>
                 </label>
+                <label class="course-opt" id="lbl-nr34">
+                  <input type="checkbox" id="chk-nr34" value="nr34" onchange="toggleCurso()">
+                  <div>
+                    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:.3px;">⚓ NR-34 — Construção Naval / Serviços a Quente</div>
+                    <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:2px;">12h · 6 módulos · Indústria naval · Validade 1 ano</div>
+                  </div>
+                </label>
               </div>
             </div>
             <div class="fg"><label>Nome completo</label><input id="cad-nome" type="text"
@@ -2572,6 +2630,7 @@
           <a href="#nr33v">NR-33 — Vigia e Trab. Autorizado</a>
           <a href="#nr33s">NR-33 — Supervisor de Entrada</a>
           <a href="#nr35">NR-35 — Trabalho em Altura</a>
+          <a href="#nr34">NR-34 — Construção Naval / Serviços a Quente</a>
           <a href="#planos">Planos Empresa</a>
         </div>
         <div class="footer-col">
@@ -2601,12 +2660,12 @@
     const API_URL = 'https://nr-capacita.onrender.com/api';
 
     function sel(c) {
-      const map = { 'nr10': 'chk-nr10', 'nr11': 'chk-nr11', 'nr33v': 'chk-nr33v', 'nr33s': 'chk-nr33s', 'nr35': 'chk-nr35' };
+      const map = { 'nr10': 'chk-nr10', 'nr11': 'chk-nr11', 'nr33v': 'chk-nr33v', 'nr33s': 'chk-nr33s', 'nr35': 'chk-nr35', 'nr34': 'chk-nr34' };
       if (map[c]) document.getElementById(map[c]).checked = true;
       toggleCurso();
     }
     function toggleCurso() {
-      ['nr10', 'nr11', 'nr33v', 'nr33s', 'nr35'].forEach(id => {
+      ['nr10', 'nr11', 'nr33v', 'nr33s', 'nr35', 'nr34'].forEach(id => {
         const chk = document.getElementById('chk-' + id);
         const lbl = document.getElementById('lbl-' + id);
         if (lbl) { if (chk.checked) lbl.classList.add('selected'); else lbl.classList.remove('selected'); }
@@ -2625,7 +2684,7 @@
     }
 
     async function cadastrar() {
-      const cursosSel = ['nr10', 'nr11', 'nr33v', 'nr33s', 'nr35'].filter(id => document.getElementById('chk-' + id)?.checked);
+      const cursosSel = ['nr10', 'nr11', 'nr33v', 'nr33s', 'nr35', 'nr34'].filter(id => document.getElementById('chk-' + id)?.checked);
       const curso = cursosSel.join('_') || '';
       const nome = document.getElementById('cad-nome').value.trim();
       const cpf = document.getElementById('cad-cpf').value.trim();
