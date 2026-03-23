@@ -1331,7 +1331,7 @@
     .checkout-sec {
       background: var(--bg2);
       position: relative;
-      overflow: hidden
+      overflow: visible
     }
 
     .checkout-sec::before {
@@ -1342,7 +1342,8 @@
       width: 600px;
       height: 600px;
       background: radial-gradient(circle, rgba(245, 200, 0, .06) 0%, transparent 70%);
-      pointer-events: none
+      pointer-events: none;
+      z-index: 0
     }
 
     .checkout-sec::after {
@@ -1353,7 +1354,8 @@
       width: 500px;
       height: 500px;
       background: radial-gradient(circle, rgba(0, 212, 255, .05) 0%, transparent 70%);
-      pointer-events: none
+      pointer-events: none;
+      z-index: 0
     }
 
     .checkout-grid {
@@ -1501,7 +1503,7 @@
     .ms-tag { background:rgba(245,200,0,.15);border:1px solid rgba(245,200,0,.35);color:var(--gold);border-radius:4px;padding:3px 7px;font-size:11px;font-weight:700;display:flex;align-items:center;gap:5px;letter-spacing:.3px }
     .ms-tag-x { cursor:pointer;opacity:.5;font-size:15px;line-height:1;font-weight:400 }
     .ms-tag-x:hover { opacity:1 }
-    .ms-dropdown { display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;background:#1a1a1a;border:1.5px solid rgba(255,255,255,.1);border-radius:8px;z-index:200;max-height:340px;overflow-y:auto;box-shadow:0 12px 40px rgba(0,0,0,.6) }
+    .ms-dropdown { display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;background:#1a1a1a;border:1.5px solid rgba(255,255,255,.1);border-radius:8px;z-index:1000;max-height:340px;overflow-y:auto;box-shadow:0 12px 40px rgba(0,0,0,.6) }
     .ms-dropdown.open { display:block }
     .ms-option { display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.04);transition:background .15s }
     .ms-option:last-child { border-bottom:none }
