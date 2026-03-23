@@ -1489,13 +1489,32 @@
       color: var(--white)
     }
 
-    /* Seleção de Cursos */
-    .course-opts {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 8px
-    }
+    /* Multi-select cascata */
+    .ms-wrap { position:relative; margin-top:8px }
+    .ms-field { background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.1);border-radius:8px;padding:10px 12px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;min-height:46px;gap:8px;transition:border-color .2s }
+    .ms-field:hover { border-color:rgba(255,255,255,.25) }
+    .ms-field.open { border-color:var(--gold) }
+    .ms-tags { display:flex;flex-wrap:wrap;gap:5px;flex:1 }
+    .ms-placeholder { color:rgba(255,255,255,.25);font-size:13px }
+    .ms-arrow { color:rgba(255,255,255,.3);font-size:11px;flex-shrink:0;transition:transform .2s }
+    .ms-field.open .ms-arrow { transform:rotate(180deg) }
+    .ms-tag { background:rgba(245,200,0,.15);border:1px solid rgba(245,200,0,.35);color:var(--gold);border-radius:4px;padding:3px 7px;font-size:11px;font-weight:700;display:flex;align-items:center;gap:5px;letter-spacing:.3px }
+    .ms-tag-x { cursor:pointer;opacity:.5;font-size:15px;line-height:1;font-weight:400 }
+    .ms-tag-x:hover { opacity:1 }
+    .ms-dropdown { display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;background:#1a1a1a;border:1.5px solid rgba(255,255,255,.1);border-radius:8px;z-index:200;max-height:340px;overflow-y:auto;box-shadow:0 12px 40px rgba(0,0,0,.6) }
+    .ms-dropdown.open { display:block }
+    .ms-option { display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.04);transition:background .15s }
+    .ms-option:last-child { border-bottom:none }
+    .ms-option:hover { background:rgba(255,255,255,.05) }
+    .ms-option.selected { background:rgba(245,200,0,.06) }
+    .ms-check { width:18px;height:18px;border-radius:4px;border:1.5px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:11px;color:transparent;flex-shrink:0;transition:all .15s }
+    .ms-option.selected .ms-check { background:var(--gold);border-color:var(--gold);color:#000 }
+    .ms-opt-em { font-size:18px;flex-shrink:0 }
+    .ms-opt-t { font-size:13px;font-weight:700;color:#fff }
+    .ms-opt-s { font-size:11px;color:rgba(255,255,255,.35);margin-top:1px }
+
+    /* legacy (não usado mas evita quebrar outros estilos) */
+    .course-opts { display:none }
     .course-opt {
       display: flex;
       align-items: center;
@@ -2599,65 +2618,59 @@
             <div class="form-h">Cadastro gratuito</div>
             <div class="form-sub">Seu CPF será seu login e senha de acesso à plataforma</div>
             <div class="fg">
-              <label>Quais cursos você quer fazer? <span style="font-weight:400;color:rgba(255,255,255,.35)">(selecione
-                  um ou mais)</span></label>
-              <div class="course-opts">
-                <label class="course-opt" id="lbl-nr10">
-                  <input type="checkbox" id="chk-nr10" value="nr10" onchange="toggleCurso()">
-                  <div>
-                    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:.3px;">⚡ NR-10 — Segurança em Eletricidade</div>
-                    <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:2px;">40h · 5 módulos · Para eletricistas e operadores</div>
+              <label>Quais cursos você quer fazer?</label>
+              <div class="ms-wrap" id="ms-wrap">
+                <!-- campo disparador -->
+                <div class="ms-field" id="ms-field" onclick="msToggle()">
+                  <div class="ms-tags" id="ms-tags">
+                    <span class="ms-placeholder" id="ms-ph">Selecione um ou mais cursos...</span>
                   </div>
-                </label>
-                <label class="course-opt" id="lbl-nr11">
-                  <input type="checkbox" id="chk-nr11" value="nr11" onchange="toggleCurso()">
-                  <div>
-                    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:.3px;">📦 NR-11 — Operador de Empilhadeira</div>
-                    <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:2px;">16h · 4 módulos · Para operadores de empilhadeira</div>
+                  <span class="ms-arrow">▾</span>
+                </div>
+                <!-- dropdown -->
+                <div class="ms-dropdown" id="ms-dropdown">
+                  <div class="ms-option" data-id="nr10" onclick="msToggleOpt('nr10',this)">
+                    <div class="ms-check">✓</div><span class="ms-opt-em">⚡</span>
+                    <div><div class="ms-opt-t">NR-10 — Segurança em Eletricidade</div><div class="ms-opt-s">40h · 5 módulos · Para eletricistas e operadores</div></div>
                   </div>
-                </label>
-                <label class="course-opt" id="lbl-nr33v">
-                  <input type="checkbox" id="chk-nr33v" value="nr33v" onchange="toggleCurso()">
-                  <div>
-                    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:.3px;">🕳️ NR-33 — Vigia e Trabalhador Autorizado</div>
-                    <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:2px;">16h · 5 módulos · Validade 1 ano</div>
+                  <div class="ms-option" data-id="nr11" onclick="msToggleOpt('nr11',this)">
+                    <div class="ms-check">✓</div><span class="ms-opt-em">📦</span>
+                    <div><div class="ms-opt-t">NR-11 — Operador de Empilhadeira</div><div class="ms-opt-s">16h · 4 módulos · Para operadores de empilhadeira</div></div>
                   </div>
-                </label>
-                <label class="course-opt" id="lbl-nr33s">
-                  <input type="checkbox" id="chk-nr33s" value="nr33s" onchange="toggleCurso()">
-                  <div>
-                    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:.3px;">🦺 NR-33 — Supervisor de Entrada</div>
-                    <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:2px;">40h · 8 módulos · Validade 1 ano</div>
+                  <div class="ms-option" data-id="nr33v" onclick="msToggleOpt('nr33v',this)">
+                    <div class="ms-check">✓</div><span class="ms-opt-em">🕳️</span>
+                    <div><div class="ms-opt-t">NR-33 — Vigia e Trabalhador Autorizado</div><div class="ms-opt-s">16h · 5 módulos · Validade 1 ano</div></div>
                   </div>
-                </label>
-                <label class="course-opt" id="lbl-nr35">
-                  <input type="checkbox" id="chk-nr35" value="nr35" onchange="toggleCurso()">
-                  <div>
-                    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:.3px;">🏗️ NR-35 — Trabalho em Altura</div>
-                    <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:2px;">8h · 4 módulos · Para trabalho acima de 2 metros</div>
+                  <div class="ms-option" data-id="nr33s" onclick="msToggleOpt('nr33s',this)">
+                    <div class="ms-check">✓</div><span class="ms-opt-em">🦺</span>
+                    <div><div class="ms-opt-t">NR-33 — Supervisor de Entrada</div><div class="ms-opt-s">40h · 8 módulos · Validade 1 ano</div></div>
                   </div>
-                </label>
-                <label class="course-opt" id="lbl-nr34">
-                  <input type="checkbox" id="chk-nr34" value="nr34" onchange="toggleCurso()">
-                  <div>
-                    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:.3px;">⚓ NR-34 — Construção Naval / Serviços a Quente</div>
-                    <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:2px;">12h · 6 módulos · Indústria naval · Validade 1 ano</div>
+                  <div class="ms-option" data-id="nr35" onclick="msToggleOpt('nr35',this)">
+                    <div class="ms-check">✓</div><span class="ms-opt-em">🏗️</span>
+                    <div><div class="ms-opt-t">NR-35 — Trabalho em Altura</div><div class="ms-opt-s">8h · 4 módulos · Para trabalho acima de 2 metros</div></div>
                   </div>
-                </label>
-                <label class="course-opt" id="lbl-nr18">
-                  <input type="checkbox" id="chk-nr18" value="nr18" onchange="toggleCurso()">
-                  <div>
-                    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:.3px;">🏗️ NR-18 — Segurança e Saúde na Construção Civil</div>
-                    <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:2px;">8h · 6 módulos · Construção civil · Validade 2 anos</div>
+                  <div class="ms-option" data-id="nr34" onclick="msToggleOpt('nr34',this)">
+                    <div class="ms-check">✓</div><span class="ms-opt-em">⚓</span>
+                    <div><div class="ms-opt-t">NR-34 — Construção Naval / Serviços a Quente</div><div class="ms-opt-s">12h · 6 módulos · Validade 1 ano</div></div>
                   </div>
-                </label>
-                <label class="course-opt" id="lbl-nr06">
-                  <input type="checkbox" id="chk-nr06" value="nr06" onchange="toggleCurso()">
-                  <div>
-                    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:.3px;">🥽 NR-06 — Equipamentos de Proteção Individual</div>
-                    <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:2px;">4h · 5 módulos · EPI · Validade 2 anos</div>
+                  <div class="ms-option" data-id="nr18" onclick="msToggleOpt('nr18',this)">
+                    <div class="ms-check">✓</div><span class="ms-opt-em">🏗️</span>
+                    <div><div class="ms-opt-t">NR-18 — Segurança na Construção Civil</div><div class="ms-opt-s">8h · 6 módulos · Validade 2 anos</div></div>
                   </div>
-                </label>
+                  <div class="ms-option" data-id="nr06" onclick="msToggleOpt('nr06',this)">
+                    <div class="ms-check">✓</div><span class="ms-opt-em">🥽</span>
+                    <div><div class="ms-opt-t">NR-06 — Equipamentos de Proteção Individual</div><div class="ms-opt-s">4h · 5 módulos · Validade 2 anos</div></div>
+                  </div>
+                </div>
+                <!-- checkboxes ocultos (compatibilidade) -->
+                <input type="checkbox" id="chk-nr10" style="display:none">
+                <input type="checkbox" id="chk-nr11" style="display:none">
+                <input type="checkbox" id="chk-nr33v" style="display:none">
+                <input type="checkbox" id="chk-nr33s" style="display:none">
+                <input type="checkbox" id="chk-nr35" style="display:none">
+                <input type="checkbox" id="chk-nr34" style="display:none">
+                <input type="checkbox" id="chk-nr18" style="display:none">
+                <input type="checkbox" id="chk-nr06" style="display:none">
               </div>
             </div>
             <div class="fg"><label>Nome completo</label><input id="cad-nome" type="text"
@@ -2802,18 +2815,70 @@
     // ── URL da plataforma — altere se mudar o domínio
     const API_URL = 'https://nr-capacita.onrender.com/api';
 
+    const MS_IDS = ['nr10','nr11','nr33v','nr33s','nr35','nr34','nr18','nr06'];
+
+    function msToggle() {
+      const field = document.getElementById('ms-field');
+      const dd = document.getElementById('ms-dropdown');
+      const open = dd.classList.contains('open');
+      dd.classList.toggle('open', !open);
+      field.classList.toggle('open', !open);
+    }
+
+    function msToggleOpt(id, el) {
+      const chk = document.getElementById('chk-' + id);
+      chk.checked = !chk.checked;
+      el.classList.toggle('selected', chk.checked);
+      msRenderTags();
+    }
+
+    function msRemove(id, e) {
+      e.stopPropagation();
+      document.getElementById('chk-' + id).checked = false;
+      const opt = document.querySelector('.ms-option[data-id="' + id + '"]');
+      if (opt) opt.classList.remove('selected');
+      msRenderTags();
+    }
+
+    function msRenderTags() {
+      const tags = document.getElementById('ms-tags');
+      const ph = document.getElementById('ms-ph');
+      tags.querySelectorAll('.ms-tag').forEach(t => t.remove());
+      const sel = MS_IDS.filter(id => document.getElementById('chk-' + id).checked);
+      if (sel.length === 0) {
+        ph.style.display = '';
+      } else {
+        ph.style.display = 'none';
+        const emMap = { nr10:'⚡', nr11:'📦', nr33v:'🕳️', nr33s:'🦺', nr35:'🏗️', nr34:'⚓', nr18:'🏗️', nr06:'🥽' };
+        sel.forEach(id => {
+          const tag = document.createElement('span');
+          tag.className = 'ms-tag';
+          tag.innerHTML = emMap[id] + ' ' + id.toUpperCase() + ' <span class="ms-tag-x" onclick="msRemove(\'' + id + '\',event)">×</span>';
+          tags.insertBefore(tag, ph);
+        });
+      }
+    }
+
+    // Fechar dropdown ao clicar fora
+    document.addEventListener('click', e => {
+      const wrap = document.getElementById('ms-wrap');
+      if (wrap && !wrap.contains(e.target)) {
+        document.getElementById('ms-dropdown').classList.remove('open');
+        document.getElementById('ms-field').classList.remove('open');
+      }
+    });
+
     function sel(c) {
-      const map = { 'nr10': 'chk-nr10', 'nr11': 'chk-nr11', 'nr33v': 'chk-nr33v', 'nr33s': 'chk-nr33s', 'nr35': 'chk-nr35', 'nr34': 'chk-nr34', 'nr18': 'chk-nr18', 'nr06': 'chk-nr06' };
-      if (map[c]) document.getElementById(map[c]).checked = true;
-      toggleCurso();
+      const chk = document.getElementById('chk-' + c);
+      if (chk) {
+        chk.checked = true;
+        const opt = document.querySelector('.ms-option[data-id="' + c + '"]');
+        if (opt) opt.classList.add('selected');
+        msRenderTags();
+      }
     }
-    function toggleCurso() {
-      ['nr10', 'nr11', 'nr33v', 'nr33s', 'nr35', 'nr34', 'nr18', 'nr06'].forEach(id => {
-        const chk = document.getElementById('chk-' + id);
-        const lbl = document.getElementById('lbl-' + id);
-        if (lbl) { if (chk.checked) lbl.classList.add('selected'); else lbl.classList.remove('selected'); }
-      });
-    }
+
+    function toggleCurso() { /* mantido para compatibilidade */ }
 
     function mascaraCPF(el) {
       let v = el.value.replace(/\D/g, '').slice(0, 11);
@@ -2827,7 +2892,7 @@
     }
 
     async function cadastrar() {
-      const cursosSel = ['nr10', 'nr11', 'nr33v', 'nr33s', 'nr35', 'nr34', 'nr18'].filter(id => document.getElementById('chk-' + id)?.checked);
+      const cursosSel = MS_IDS.filter(id => document.getElementById('chk-' + id)?.checked);
       const curso = cursosSel.join('_') || '';
       const nome = document.getElementById('cad-nome').value.trim();
       const cpf = document.getElementById('cad-cpf').value.trim();
