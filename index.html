@@ -423,7 +423,13 @@
       align-items: center;
       gap: 14px;
       padding: 14px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, .05)
+      border-bottom: 1px solid rgba(255, 255, 255, .05);
+      cursor: pointer;
+      transition: opacity .2s
+    }
+
+    .hc-item:hover {
+      opacity: .8
     }
 
     .hc-item:last-child {
@@ -1862,7 +1868,7 @@
         style="color:rgba(255,255,255,.65);text-decoration:none;font-size:13px;font-weight:600;letter-spacing:.3px;transition:color .2s;white-space:nowrap;"
         onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='rgba(255,255,255,.65)'">Já sou aluno
         →</a>
-      <a href="#checkout" class="nav-btn">Estudar Grátis →</a>
+      <a href="#form-cadastro" class="nav-btn">Estudar Grátis →</a>
     </div>
   </nav>
 
@@ -2831,6 +2837,15 @@
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in') });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el => obs.observe(el));
+
+    // Cards → direto ao formulário de cadastro
+    function irParaCadastro() {
+      document.getElementById('form-cadastro').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    document.querySelectorAll('.hc-item, .curso-card').forEach(el => {
+      el.style.cursor = 'pointer';
+      el.addEventListener('click', irParaCadastro);
+    });
   </script>
 </body>
 
