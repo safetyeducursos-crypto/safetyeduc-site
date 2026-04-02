@@ -2928,8 +2928,8 @@
             <div class="fr">
               <div class="fg"><label>CPF</label><input id="cad-cpf" type="text" placeholder="000.000.000-00"
                   oninput="mascaraCPF(this)"></div>
-              <div class="fg"><label>Telefone / WhatsApp</label><input id="cad-tel" type="tel"
-                  placeholder="(00) 00000-0000" oninput="mascaraTel(this)"></div>
+              <div class="fg"><label>Telefone / WhatsApp <span style="color:var(--red)">*</span></label><input id="cad-tel" type="tel"
+                  placeholder="(00) 00000-0000" oninput="mascaraTel(this)" required></div>
             </div>
             <div class="fg"><label>E-mail</label><input id="cad-email" type="email" placeholder="seu@email.com"></div>
             <div class="fg"><label>Empresa (opcional)</label><input id="cad-empresa" type="text"
@@ -3167,6 +3167,7 @@
       if (!nome) { err.textContent = 'Informe seu nome completo.'; err.style.display = 'block'; return; }
       const cpfDigits = cpf.replace(/\D/g, '');
       if (cpfDigits.length !== 11) { err.textContent = 'CPF inválido — digite os 11 dígitos.'; err.style.display = 'block'; return; }
+      if (!tel || tel.replace(/\D/g,'').length < 10) { err.textContent = 'Informe seu telefone/WhatsApp.'; err.style.display = 'block'; return; }
       if (!email || !email.includes('@')) { err.textContent = 'Informe um e-mail válido.'; err.style.display = 'block'; return; }
 
       btn.disabled = true; btn.textContent = 'Criando sua conta...';
