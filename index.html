@@ -3308,6 +3308,26 @@
       el.style.cursor = 'pointer';
       el.addEventListener('click', irParaCadastro);
     });
+
+    // ?curso=nr12 — link direto por curso (ex: safetyeduc.com.br/?curso=nr12)
+    (function () {
+      const param = new URLSearchParams(window.location.search).get('curso');
+      if (!param) return;
+      const id = param.toLowerCase();
+      if (!MS_IDS.includes(id)) return;
+      // Marca o curso no multiselect
+      const chk = document.getElementById('chk-' + id);
+      if (chk) {
+        chk.checked = true;
+        const opt = document.querySelector('.ms-option[data-id="' + id + '"]');
+        if (opt) opt.classList.add('selected');
+        msRenderTags();
+      }
+      // Rola suavemente ao formulário de cadastro
+      setTimeout(() => {
+        document.getElementById('form-cadastro').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300);
+    })();
   </script>
 </body>
 
