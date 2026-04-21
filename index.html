@@ -238,6 +238,8 @@
       animation: blink 1.5s infinite
     }
 
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    @keyframes spin{to{transform:rotate(360deg)}}
     @keyframes blink {
 
       0%,
@@ -2982,31 +2984,39 @@
                     <div><div class="ms-opt-t">NR-35 — Trabalho em Altura</div><div class="ms-opt-s">8h · 4 módulos · Para trabalho acima de 2 metros</div></div>
                   </div>
                 </div>
-                <!-- checkboxes ocultos (compatibilidade) -->
-                <input type="checkbox" id="chk-nr10" style="display:none">
-                <input type="checkbox" id="chk-nr11" style="display:none">
-                <input type="checkbox" id="chk-nr12" style="display:none">
-                <input type="checkbox" id="chk-nr33v" style="display:none">
-                <input type="checkbox" id="chk-nr33s" style="display:none">
-                <input type="checkbox" id="chk-nr35" style="display:none">
-                <input type="checkbox" id="chk-nr34" style="display:none">
-                <input type="checkbox" id="chk-nr18" style="display:none">
-                <input type="checkbox" id="chk-nr06" style="display:none">
-                <input type="checkbox" id="chk-nr20" style="display:none">
-                <input type="checkbox" id="chk-nr05" style="display:none">
+                <!-- checkboxes ocultos (compatibilidade) — sr-only para acessibilidade -->
+                <input type="checkbox" id="chk-nr10" class="sr-only" aria-label="NR-10">
+                <input type="checkbox" id="chk-nr11" class="sr-only" aria-label="NR-11">
+                <input type="checkbox" id="chk-nr12" class="sr-only" aria-label="NR-12">
+                <input type="checkbox" id="chk-nr33v" class="sr-only" aria-label="NR-33 Vigia">
+                <input type="checkbox" id="chk-nr33s" class="sr-only" aria-label="NR-33 Supervisor">
+                <input type="checkbox" id="chk-nr35" class="sr-only" aria-label="NR-35">
+                <input type="checkbox" id="chk-nr34" class="sr-only" aria-label="NR-34">
+                <input type="checkbox" id="chk-nr18" class="sr-only" aria-label="NR-18">
+                <input type="checkbox" id="chk-nr06" class="sr-only" aria-label="NR-06">
+                <input type="checkbox" id="chk-nr20" class="sr-only" aria-label="NR-20">
+                <input type="checkbox" id="chk-nr05" class="sr-only" aria-label="NR-05">
               </div>
             </div>
-            <div class="fg"><label>Nome completo</label><input id="cad-nome" type="text"
-                placeholder="Seu nome completo"></div>
+            <div class="fg"><label>Nome completo <span style="color:var(--red)">*</span></label><input id="cad-nome" type="text"
+                placeholder="Seu nome completo" autocomplete="name"></div>
             <div class="fr">
-              <div class="fg"><label>CPF</label><input id="cad-cpf" type="text" placeholder="000.000.000-00"
-                  oninput="mascaraCPF(this)"></div>
+              <div class="fg">
+                <label>CPF <span style="color:var(--red)">*</span></label>
+                <input id="cad-cpf" type="text" inputmode="numeric" placeholder="000.000.000-00"
+                  oninput="mascaraCPF(this)" onblur="validarCPFBlur(this)" autocomplete="off" maxlength="14">
+                <div id="cad-cpf-err" style="display:none;font-size:11px;color:#ff8080;margin-top:3px"></div>
+              </div>
               <div class="fg"><label>Telefone / WhatsApp <span style="color:var(--red)">*</span></label><input id="cad-tel" type="tel"
-                  placeholder="(00) 00000-0000" oninput="mascaraTel(this)" required></div>
+                  placeholder="(00) 00000-0000" oninput="mascaraTel(this)" autocomplete="tel"></div>
             </div>
-            <div class="fg"><label>E-mail</label><input id="cad-email" type="email" placeholder="seu@email.com"></div>
-            <div class="fg"><label>Empresa (opcional)</label><input id="cad-empresa" type="text"
-                placeholder="Nome da empresa"></div>
+            <div class="fg">
+              <label>E-mail <span style="color:var(--red)">*</span></label>
+              <input id="cad-email" type="email" placeholder="seu@email.com" onblur="validarEmailBlur(this)" autocomplete="email">
+              <div id="cad-email-err" style="display:none;font-size:11px;color:#ff8080;margin-top:3px"></div>
+            </div>
+            <div class="fg"><label>Empresa <span style="font-size:11px;color:#8a9ab5;font-weight:400">(opcional)</span></label><input id="cad-empresa" type="text"
+                placeholder="Nome da empresa" autocomplete="organization"></div>
             <div id="cad-err"
               style="display:none;background:rgba(255,61,61,.1);border:1px solid rgba(255,61,61,.3);border-radius:8px;padding:12px 16px;font-size:13px;color:#ff8080;margin-bottom:16px">
             </div>
@@ -3220,6 +3230,9 @@
       let v = el.value.replace(/\D/g, '').slice(0, 11);
       v = v.replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d{1,2})$/, '$1-$2');
       el.value = v;
+      // limpa erro inline ao digitar
+      const errEl = document.getElementById('cad-cpf-err');
+      if (errEl) errEl.style.display = 'none';
     }
     function mascaraTel(el) {
       let v = el.value.replace(/\D/g, '').slice(0, 11);
@@ -3227,7 +3240,51 @@
       el.value = v;
     }
 
+    // Validação CPF mod11 — espelha lógica do servidor
+    function cpfValido(digits) {
+      if (digits.length !== 11 || /^(\d)\1+$/.test(digits)) return false;
+      let s = 0;
+      for (let i = 0; i < 9; i++) s += parseInt(digits[i]) * (10 - i);
+      let r = (s * 10) % 11; if (r === 10 || r === 11) r = 0;
+      if (r !== parseInt(digits[9])) return false;
+      s = 0;
+      for (let i = 0; i < 10; i++) s += parseInt(digits[i]) * (11 - i);
+      r = (s * 10) % 11; if (r === 10 || r === 11) r = 0;
+      return r === parseInt(digits[10]);
+    }
+
+    function validarCPFBlur(el) {
+      const d = el.value.replace(/\D/g, '');
+      const errEl = document.getElementById('cad-cpf-err');
+      if (!errEl) return;
+      if (d.length === 11 && !cpfValido(d)) {
+        errEl.textContent = 'CPF inválido — verifique os dígitos.';
+        errEl.style.display = 'block';
+        el.style.borderColor = 'rgba(255,80,80,.6)';
+      } else {
+        errEl.style.display = 'none';
+        el.style.borderColor = '';
+      }
+    }
+
+    function validarEmailBlur(el) {
+      const errEl = document.getElementById('cad-email-err');
+      if (!errEl) return;
+      const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim());
+      if (el.value.trim() && !ok) {
+        errEl.textContent = 'E-mail inválido — verifique o endereço.';
+        errEl.style.display = 'block';
+        el.style.borderColor = 'rgba(255,80,80,.6)';
+      } else {
+        errEl.style.display = 'none';
+        el.style.borderColor = '';
+      }
+    }
+
+    let _cadastrando = false;
+
     async function cadastrar() {
+      if (_cadastrando) return;
       const cursosSel = MS_IDS.filter(id => document.getElementById('chk-' + id)?.checked);
       const curso = cursosSel.join('_') || '';
       const nome = document.getElementById('cad-nome').value.trim();
@@ -3236,56 +3293,91 @@
       const email = document.getElementById('cad-email').value.trim();
       const emp = document.getElementById('cad-empresa').value.trim();
       const err = document.getElementById('cad-err');
-      const ok = document.getElementById('cad-ok');
+      const okEl = document.getElementById('cad-ok');
       const btn = document.getElementById('btn-cadastrar');
 
-      err.style.display = 'none'; ok.style.display = 'none';
+      err.style.display = 'none'; okEl.style.display = 'none';
 
+      // Validações client-side
       if (!curso) { err.textContent = 'Selecione pelo menos um curso.'; err.style.display = 'block'; return; }
-      if (!nome) { err.textContent = 'Informe seu nome completo.'; err.style.display = 'block'; return; }
+      if (!nome || nome.length < 3) { err.textContent = 'Informe seu nome completo.'; err.style.display = 'block'; return; }
       const cpfDigits = cpf.replace(/\D/g, '');
-      if (cpfDigits.length !== 11) { err.textContent = 'CPF inválido — digite os 11 dígitos.'; err.style.display = 'block'; return; }
+      if (!cpfValido(cpfDigits)) { err.textContent = 'CPF inválido — verifique os dígitos.'; err.style.display = 'block'; return; }
       if (!tel || tel.replace(/\D/g,'').length < 10) { err.textContent = 'Informe seu telefone/WhatsApp.'; err.style.display = 'block'; return; }
-      if (!email || !email.includes('@')) { err.textContent = 'Informe um e-mail válido.'; err.style.display = 'block'; return; }
-      if (!document.getElementById('cad-lgpd').checked) { err.textContent = 'Você precisa autorizar o envio de mensagens para continuar.'; err.style.display = 'block'; return; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.textContent = 'Informe um e-mail válido.'; err.style.display = 'block'; return; }
+      if (!document.getElementById('cad-lgpd').checked) { err.textContent = 'Você precisa aceitar os Termos de Uso para continuar.'; err.style.display = 'block'; return; }
 
-      btn.disabled = true; btn.textContent = 'Criando sua conta...';
+      _cadastrando = true;
+      btn.disabled = true;
+      btn.innerHTML = '<span style="display:inline-flex;align-items:center;gap:8px"><span style="width:16px;height:16px;border:2px solid rgba(0,0,0,.3);border-top-color:#000;border-radius:50%;animation:spin .7s linear infinite;display:inline-block"></span>Criando sua conta...</span>';
+
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 15000);
 
       try {
         const res = await fetch(API_URL + '/cadastro-publico', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ nome, cpf, telefone: tel, email, empresa: emp, curso_id: curso })
+          body: JSON.stringify({ nome, cpf, telefone: tel, email, empresa: emp, curso_id: curso }),
+          signal: controller.signal
         });
+        clearTimeout(timeout);
         const data = await res.json();
         if (!res.ok) throw new Error(data.erro || 'Erro ao criar conta');
 
-        ok.innerHTML = `
+        okEl.innerHTML = `
       <div style="text-align:center;padding:8px 0">
-        <div style="font-size:18px;font-weight:700;margin-bottom:8px">✅ Conta criada com sucesso!</div>
-        <div style="font-size:14px;opacity:.8;margin-bottom:16px">Seu acesso foi criado. Agora você pode estudar gratuitamente e caso queira pode obter seu certificado ao concluir.</div>
-        <div style="background:rgba(255,255,255,.08);border-radius:8px;padding:12px;font-size:13px;opacity:.7;margin-bottom:16px">
-          Login: <strong>${cpfDigits}</strong> · Senha: <strong>${cpfDigits}</strong>
-        </div>
+        <div style="font-size:28px;margin-bottom:8px">✅</div>
+        <div style="font-size:18px;font-weight:700;margin-bottom:8px">Conta criada com sucesso!</div>
+        <div style="font-size:14px;opacity:.8;margin-bottom:20px">Seu acesso está pronto. Use seu <strong>CPF</strong> como login e senha inicial na plataforma.</div>
         <a href="https://plataforma.safetyeduc.com.br" target="_blank"
-          style="display:block;padding:16px;background:var(--gold);color:#000;border-radius:10px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:18px;letter-spacing:1px;text-transform:uppercase;text-decoration:none">
+          style="display:block;padding:16px;background:var(--gold);color:#000;border-radius:10px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:18px;letter-spacing:1px;text-transform:uppercase;text-decoration:none;margin-bottom:12px">
           🎓 Acessar o curso agora →
         </a>
+        <button onclick="resetarFormCadastro()" style="background:none;border:1px solid rgba(255,255,255,.2);color:#8a9ab5;padding:10px 20px;border-radius:8px;cursor:pointer;font-size:13px;width:100%">Fazer outro cadastro</button>
       </div>`;
-        ok.style.display = 'block';
+        okEl.style.display = 'block';
         btn.style.display = 'none';
       } catch (e) {
-        err.textContent = e.message === 'Failed to fetch'
-          ? 'Servidor indisponível. Tente novamente em instantes.'
-          : e.message;
+        clearTimeout(timeout);
+        if (e.name === 'AbortError') {
+          err.textContent = 'O servidor demorou muito para responder. Verifique sua conexão e tente novamente.';
+        } else if (e.message === 'Failed to fetch') {
+          err.textContent = 'Sem conexão com o servidor. Verifique sua internet e tente novamente.';
+        } else {
+          err.textContent = e.message;
+        }
         err.style.display = 'block';
-        btn.disabled = false; btn.textContent = '🚀 Criar minha conta grátis';
+        btn.disabled = false;
+        btn.innerHTML = '🚀 Criar minha conta grátis';
+        _cadastrando = false;
       }
     }
 
+    function resetarFormCadastro() {
+      _cadastrando = false;
+      document.getElementById('cad-ok').style.display = 'none';
+      document.getElementById('cad-err').style.display = 'none';
+      const btn = document.getElementById('btn-cadastrar');
+      btn.style.display = '';
+      btn.disabled = false;
+      btn.innerHTML = '🚀 Criar minha conta grátis';
+      ['cad-nome','cad-cpf','cad-tel','cad-email','cad-empresa'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { el.value = ''; el.style.borderColor = ''; }
+      });
+      document.getElementById('cad-lgpd').checked = false;
+      MS_IDS.forEach(id => {
+        const chk = document.getElementById('chk-' + id);
+        if (chk) chk.checked = false;
+        const opt = document.querySelector('.ms-option[data-id="' + id + '"]');
+        if (opt) opt.classList.remove('selected');
+      });
+      msRenderTags();
+    }
 
-    // ── WhatsApp — número sem máscara ex: 5548991497452
-    const WHATSAPP_NUM = '5548991758291'; // ← SUBSTITUA pelo seu número
+    // ── WhatsApp — número fragmentado para evitar scraping
+    const WHATSAPP_NUM = ['55','48','9917','58291'].join('');
 
     function abrirWhatsApp(plano) {
       const msg = encodeURIComponent(
