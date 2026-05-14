@@ -1983,6 +1983,14 @@
               <div class="hc-price" style="color:#6dffb0;font-size:16px">GRÁTIS</div>
             </div>
             <div class="hc-item">
+              <div class="hc-icon" style="font-size:36px;line-height:1">🔄</div>
+              <div class="hc-info">
+                <div class="hc-name">NR-11 — Reciclagem Empilhadeira</div>
+                <div class="hc-meta">8h · 2 módulos</div>
+              </div>
+              <div class="hc-price" style="color:#6dffb0;font-size:16px">GRÁTIS</div>
+            </div>
+            <div class="hc-item">
               <div class="hc-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" width="44" height="44"><rect x="8" y="8" width="44" height="44" rx="5" fill="#f5c800" stroke="#1a1a1a" stroke-width="2.5" transform="rotate(45 30 30)"/><rect x="12" y="12" width="36" height="36" rx="3" fill="none" stroke="#1a1a1a" stroke-width="1.5" transform="rotate(45 30 30)"/><text x="30" y="24" font-family="Arial Black,Arial,sans-serif" font-size="8" font-weight="900" text-anchor="middle" fill="#1a1a1a" letter-spacing="1">NR</text><text x="30" y="39" font-family="Arial Black,Arial,sans-serif" font-size="15" font-weight="900" text-anchor="middle" fill="#1a1a1a">33</text></svg></div>
               <div class="hc-info">
                 <div class="hc-name">NR-33 — Vigia e Trab. Autorizado</div>
@@ -2350,6 +2358,42 @@
                 <div class="curso-preco-note">Certificado R$ 249,90 · Acesso ilimitado</div>
               </div>
               <a href="#checkout" class="btn-curso-primary" onclick="sel('nr12')">Começar grátis →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- NR-11 Reciclagem -->
+        <div class="curso-card hot" id="nr11r">
+          <div class="curso-hot-tag">Reciclagem 2025</div>
+          <div class="curso-header">
+            <span class="curso-em" style="font-size:64px;line-height:1;display:block;text-align:center">🔄</span>
+            <div class="curso-nr-tag">NR-11 · Reciclagem — Operador de Empilhadeira</div>
+            <div class="curso-h">Reciclagem NR 11 — Operador de Empilhadeira</div>
+            <div class="curso-sub">Renovação obrigatória anual para operadores de empilhadeira — cartão, exame de saúde e atualização normativa</div>
+          </div>
+          <div class="curso-divider"></div>
+          <div class="curso-body">
+            <div class="curso-chips">
+              <span class="chip gold">8 horas</span>
+              <span class="chip">2 módulos</span>
+              <span class="chip">20 questões</span>
+              <span class="chip">Certificado</span>
+            </div>
+            <ul class="curso-lista">
+              <li>Renovação do cartão de identificação — validade, exame de saúde e responsabilidades</li>
+              <li>Atualizações normativas da NR-11 e boas práticas consolidadas</li>
+              <li>Operação em rampas, corredores estreitos e cargas irregulares</li>
+              <li>Emergências: tombamento, incêndio a GLP, vazamento e intoxicação por CO</li>
+              <li>Primeiros socorros — SAMU (192), Bombeiros (193) e CAT</li>
+              <li>Inspeção pré-operacional, checklist obrigatório e registros legais</li>
+            </ul>
+            <div class="curso-footer">
+              <div class="curso-preco-group">
+                <div class="curso-preco-from">acesso ao curso</div>
+                <div class="curso-preco-val" style="color:#6dffb0">GRÁTIS</div>
+                <div class="curso-preco-note">Certificado por taxa única · Validade 1 ano</div>
+              </div>
+              <a href="#checkout" class="btn-curso-primary" onclick="sel('nr11r')">Começar grátis →</a>
             </div>
           </div>
         </div>
@@ -2955,6 +2999,10 @@
                     <div class="ms-check">✓</div><span class="ms-opt-em">📦</span>
                     <div><div class="ms-opt-t">NR-11 — Operador de Empilhadeira</div><div class="ms-opt-s">16h · 4 módulos · Para operadores de empilhadeira</div></div>
                   </div>
+                  <div class="ms-option" data-id="nr11r" onclick="msToggleOpt('nr11r',this)">
+                    <div class="ms-check">✓</div><span class="ms-opt-em">🔄</span>
+                    <div><div class="ms-opt-t">NR-11 — Reciclagem Operador de Empilhadeira</div><div class="ms-opt-s">8h · 2 módulos · Renovação anual obrigatória · Validade 1 ano</div></div>
+                  </div>
                   <div class="ms-option" data-id="nr12" onclick="msToggleOpt('nr12',this)">
                     <div class="ms-check">✓</div><span class="ms-opt-em">⚙️</span>
                     <div><div class="ms-opt-t">NR-12 — Operador de PTA (Plataforma de Trabalho Aéreo)</div><div class="ms-opt-s">30h · 30 módulos · Acesso ilimitado</div></div>
@@ -2987,6 +3035,7 @@
                 <!-- checkboxes ocultos (compatibilidade) — sr-only para acessibilidade -->
                 <input type="checkbox" id="chk-nr10" class="sr-only" aria-label="NR-10">
                 <input type="checkbox" id="chk-nr11" class="sr-only" aria-label="NR-11">
+                <input type="checkbox" id="chk-nr11r" class="sr-only" aria-label="NR-11 Reciclagem">
                 <input type="checkbox" id="chk-nr12" class="sr-only" aria-label="NR-12">
                 <input type="checkbox" id="chk-nr33v" class="sr-only" aria-label="NR-33 Vigia">
                 <input type="checkbox" id="chk-nr33s" class="sr-only" aria-label="NR-33 Supervisor">
@@ -3161,7 +3210,7 @@
     // ── URL da plataforma — altere se mudar o domínio
     const API_URL = 'https://nr-capacita.onrender.com/api';
 
-    const MS_IDS = ['nr05','nr10','nr11','nr12','nr33v','nr33s','nr35','nr34','nr18','nr06','nr20'];
+    const MS_IDS = ['nr05','nr10','nr11','nr11r','nr12','nr33v','nr33s','nr35','nr34','nr18','nr06','nr20'];
 
     function msToggle() {
       const field = document.getElementById('ms-field');
@@ -3195,7 +3244,7 @@
         ph.style.display = '';
       } else {
         ph.style.display = 'none';
-        const emMap = { nr05:'🛡️', nr10:'⚡', nr11:'📦', nr12:'⚙️', nr33v:'🕳️', nr33s:'🦺', nr35:'🏗️', nr34:'⚓', nr18:'🏗️', nr06:'🥽', nr20:'🔥' };
+        const emMap = { nr05:'🛡️', nr10:'⚡', nr11:'📦', nr11r:'🔄', nr12:'⚙️', nr33v:'🕳️', nr33s:'🦺', nr35:'🏗️', nr34:'⚓', nr18:'🏗️', nr06:'🥽', nr20:'🔥' };
         sel.forEach(id => {
           const tag = document.createElement('span');
           tag.className = 'ms-tag';
