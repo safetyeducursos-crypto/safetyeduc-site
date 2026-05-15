@@ -1885,7 +1885,7 @@
 
   <!-- NAV -->
   <nav>
-    <a href="#" class="nav-logo">
+    <a href="#home" class="nav-logo" onclick="event.preventDefault();window.scrollTo({top:0,behavior:'smooth'})">
       <div class="nav-logo-mark">
         <svg viewBox="0 0 64 64" fill="none">
           <path d="M16 38 Q16 22 32 20 Q48 22 48 38 Z" fill="#000" />
@@ -1903,7 +1903,7 @@
     <div class="nav-actions">
       <a href="https://plataforma.safetyeduc.com.br" class="nav-login" target="_blank" rel="noopener noreferrer"
         style="color:rgba(255,255,255,.65);text-decoration:none;font-size:13px;font-weight:600;letter-spacing:.3px;transition:color .2s;white-space:nowrap;"
-        onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='rgba(255,255,255,.65)'">Já sou aluno
+        onmouseover="this.style.color='#f5c800'" onmouseout="this.style.color='rgba(255,255,255,.65)'">Já sou aluno
         →</a>
       <a href="#form-cadastro" class="nav-btn">Estudar Grátis →</a>
     </div>
@@ -3036,7 +3036,7 @@
               </div>
             </div>
             <div class="fg"><label>Nome completo <span style="color:var(--red)">*</span></label><input id="cad-nome" type="text"
-                placeholder="Seu nome completo" autocomplete="name"></div>
+                placeholder="Seu nome completo" autocomplete="name" required minlength="3"></div>
             <div class="fr">
               <div class="fg">
                 <label>CPF <span style="color:var(--red)">*</span></label>
@@ -3045,11 +3045,11 @@
                 <div id="cad-cpf-err" style="display:none;font-size:11px;color:#ff8080;margin-top:3px"></div>
               </div>
               <div class="fg"><label>Telefone / WhatsApp <span style="color:var(--red)">*</span></label><input id="cad-tel" type="tel"
-                  placeholder="(00) 00000-0000" oninput="mascaraTel(this)" autocomplete="tel"></div>
+                  placeholder="(00) 00000-0000" oninput="mascaraTel(this)" autocomplete="tel" required></div>
             </div>
             <div class="fg">
               <label>E-mail <span style="color:var(--red)">*</span></label>
-              <input id="cad-email" type="email" placeholder="seu@email.com" onblur="validarEmailBlur(this)" autocomplete="email">
+              <input id="cad-email" type="email" placeholder="seu@email.com" onblur="validarEmailBlur(this)" autocomplete="email" required>
               <div id="cad-email-err" style="display:none;font-size:11px;color:#ff8080;margin-top:3px"></div>
             </div>
             <div class="fg"><label>Empresa <span style="font-size:11px;color:#8a9ab5;font-weight:400">(opcional)</span></label><input id="cad-empresa" type="text"
