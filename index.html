@@ -3390,9 +3390,30 @@
     }
 
     let _cadastrando = false;
+    let _infoAceita = false;
+
+    function mostrarInfoModal() {
+      document.getElementById('mo-info').style.display = 'flex';
+    }
+    function fecharInfoModal() {
+      document.getElementById('mo-info').style.display = 'none';
+    }
+    function aceitarInfoModal() {
+      if (!document.getElementById('mo-info-check').checked) {
+        document.getElementById('mo-info-err').style.display = 'block';
+        return;
+      }
+      _infoAceita = true;
+      fecharInfoModal();
+      cadastrar();
+    }
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') fecharInfoModal();
+    });
 
     async function cadastrar() {
       if (_cadastrando) return;
+      if (!_infoAceita) { mostrarInfoModal(); return; }
       const cursosSel = MS_IDS.filter(id => document.getElementById('chk-' + id)?.checked);
       const curso = cursosSel.join('_') || '';
       const nome = document.getElementById('cad-nome').value.trim();
@@ -3529,6 +3550,45 @@
       }, 300);
     })();
   </script>
+
+<!-- MODAL INFO CADASTRO -->
+<div id="mo-info" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:9999;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)">
+  <div style="background:#111;border:1px solid #2a2a2a;border-top:3px solid #f5c800;border-radius:16px;max-width:480px;width:100%;padding:36px 32px;position:relative;box-shadow:0 32px 80px rgba(0,0,0,.8)">
+    <button onclick="fecharInfoModal()" style="position:absolute;top:14px;right:16px;background:none;border:none;color:#555;font-size:20px;cursor:pointer;line-height:1">✕</button>
+
+    <div style="text-align:center;margin-bottom:24px">
+      <div style="font-size:40px;margin-bottom:10px">🎓</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;color:#fff;line-height:1.1">Antes de criar sua conta,<br>entenda como funciona</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+      <div style="background:rgba(245,200,0,.07);border:1px solid rgba(245,200,0,.2);border-radius:12px;padding:18px;text-align:center">
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:2px;color:#888;margin-bottom:6px">Estudar o curso</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:42px;font-weight:800;color:#f5c800;line-height:1">GRÁTIS</div>
+        <div style="font-size:11px;color:#666;margin-top:4px">100% online · sem cartão</div>
+      </div>
+      <div style="background:rgba(245,200,0,.07);border:1px solid rgba(245,200,0,.2);border-radius:12px;padding:18px;text-align:center">
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:2px;color:#888;margin-bottom:6px">Emitir o certificado</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:800;color:#f5c800;line-height:1">R$&nbsp;49,90</div>
+        <div style="font-size:11px;color:#666;margin-top:4px">taxa única · pague ao concluir</div>
+      </div>
+    </div>
+
+    <div style="background:rgba(255,255,255,.04);border-radius:10px;padding:14px 16px;font-size:13px;color:#aaa;line-height:1.6;margin-bottom:20px">
+      Você estuda <strong style="color:#fff">completamente de graça</strong>. Só paga R$&nbsp;49,90 se quiser o <strong style="color:#fff">certificado digital com validade legal</strong> — direto na plataforma, via Pix, cartão ou boleto.
+    </div>
+
+    <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;margin-bottom:8px" onclick="document.getElementById('mo-info-err').style.display='none'">
+      <input type="checkbox" id="mo-info-check" style="margin-top:3px;accent-color:#f5c800;width:16px;height:16px;flex-shrink:0">
+      <span style="font-size:13px;color:#ccc;line-height:1.5">Entendi: o curso é gratuito e o certificado custa <strong style="color:#f5c800">R$&nbsp;49,90</strong> (taxa única, paga somente ao concluir).</span>
+    </label>
+    <div id="mo-info-err" style="display:none;font-size:12px;color:#ff8080;margin-bottom:10px;padding-left:26px">Marque a caixa para continuar.</div>
+
+    <button onclick="aceitarInfoModal()" style="width:100%;padding:15px;background:#f5c800;color:#000;border:none;border-radius:10px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;cursor:pointer;letter-spacing:.5px;margin-top:4px" onmouseover="this.style.background='#ffe033'" onmouseout="this.style.background='#f5c800'">
+      ENTENDI — QUERO COMEÇAR GRÁTIS →
+    </button>
+  </div>
+</div>
 </body>
 
 </html>
