@@ -3610,6 +3610,25 @@
     </button>
   </div>
 </div>
+
+<!-- AVISO TEMPORÁRIO — instabilidade WhatsApp (remover após resolução) -->
+<div id="aviso-wa" style="display:flex;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:99999;align-items:center;justify-content:center;padding:20px">
+  <div style="background:#1a1a1a;border:2px solid #f5c800;border-radius:14px;max-width:420px;width:100%;padding:32px;text-align:center">
+    <div style="font-size:42px;margin-bottom:12px">⚠️</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:#f5c800;margin-bottom:10px">Instabilidade no WhatsApp</div>
+    <div style="font-size:14px;color:#ccc;line-height:1.7;margin-bottom:20px">
+      Estamos com instabilidade no envio de mensagens via WhatsApp.<br>
+      Nosso setor responsável já está ciente e trabalhando na resolução.<br><br>
+      <span style="color:#999;font-size:12px">O acesso à plataforma e aos certificados não é afetado.</span>
+    </div>
+    <button onclick="document.getElementById('aviso-wa').style.display='none';localStorage.setItem('aviso-wa-2026-05-21','ok')" style="background:#f5c800;color:#000;border:none;border-radius:8px;padding:12px 28px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;cursor:pointer">Entendi</button>
+  </div>
+</div>
+<script>
+  if(localStorage.getItem('aviso-wa-2026-05-21')){
+    document.getElementById('aviso-wa').style.display='none';
+  }
+</script>
 </body>
 
 </html>
