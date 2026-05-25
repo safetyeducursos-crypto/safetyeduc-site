@@ -3475,6 +3475,13 @@
         const data = await res.json();
         if (!res.ok) throw new Error(data.erro || 'Erro ao criar conta');
 
+        // Notifica Sofia (fire-and-forget, não bloqueia o fluxo do usuário)
+        fetch('https://telegram-bot-bqsv.onrender.com/platform/cadastro', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nome, telefone: tel, curso_id: curso })
+        }).catch(() => {});
+
         okEl.innerHTML = `
       <div style="text-align:center;padding:8px 0">
         <div style="font-size:28px;margin-bottom:8px">✅</div>
