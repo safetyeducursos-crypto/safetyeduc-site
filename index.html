@@ -2742,7 +2742,7 @@
                   </div>
                   <div style="font-size:10px;color:#8a9ab5;margin-top:2px">pagamento único · sem mensalidade</div>
                 </div>
-                <a href="#checkout" onclick="selPsi()" style="display:inline-block;background:#00d4ff;color:#000;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;padding:16px 28px;border-radius:12px;text-decoration:none;text-align:center;white-space:nowrap;letter-spacing:.5px" onmouseover="this.style.background='#33ddff'" onmouseout="this.style.background='#00d4ff'">Quero me capacitar →</a>
+                <button onclick="abrirModalPsi()" style="background:#00d4ff;color:#000;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;padding:16px 28px;border-radius:12px;border:none;cursor:pointer;white-space:nowrap;letter-spacing:.5px;transition:background .2s" onmouseover="this.style.background='#33ddff'" onmouseout="this.style.background='#00d4ff'">Quero me capacitar →</button>
               </div>
               <div style="font-size:11px;color:#8a9ab5;margin-top:12px;text-align:center">🔒 Pagamento seguro · Mercado Pago · Cartão, PIX ou Boleto</div>
             </div>
@@ -3724,6 +3724,92 @@
     </button>
   </div>
 </div>
+
+<!-- ── MODAL DE COMPRA — RISCOS PSICOSSOCIAIS ── -->
+<div id="modal-psi" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:99999;align-items:center;justify-content:center;padding:20px">
+  <div style="background:#141920;border:1px solid rgba(0,212,255,.3);border-radius:20px;width:100%;max-width:460px;overflow:hidden;position:relative">
+
+    <!-- Fechar -->
+    <button onclick="fecharModalPsi()" style="position:absolute;top:16px;right:16px;background:rgba(255,255,255,.08);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center">✕</button>
+
+    <!-- Topo -->
+    <div style="background:linear-gradient(135deg,rgba(0,212,255,.1),transparent);padding:28px 28px 20px">
+      <div style="font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#00d4ff;margin-bottom:6px">Capacitação Profissional</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;color:#fff;margin-bottom:6px">Riscos Psicossociais</div>
+      <div style="font-size:13px;color:#8a9ab5">Preencha seus dados para prosseguir ao pagamento. Acesso liberado automaticamente após a confirmação.</div>
+    </div>
+
+    <div style="height:1px;background:rgba(0,212,255,.12)"></div>
+
+    <!-- Form -->
+    <div style="padding:24px 28px" id="psi-form-area">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div>
+          <label style="font-size:11px;font-weight:600;color:#8a9ab5;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px">Nome completo <span style="color:#ff5555">*</span></label>
+          <input id="psi-nome" type="text" placeholder="Seu nome completo" style="width:100%;background:#0f1318;border:1px solid #2a3547;border-radius:8px;padding:11px 14px;color:#fff;font-size:14px;outline:none" onfocus="this.style.borderColor='#00d4ff'" onblur="this.style.borderColor='#2a3547'">
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:600;color:#8a9ab5;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px">CPF <span style="color:#ff5555">*</span></label>
+          <input id="psi-cpf" type="text" inputmode="numeric" placeholder="000.000.000-00" maxlength="14" oninput="mascaraCPF(this)" style="width:100%;background:#0f1318;border:1px solid #2a3547;border-radius:8px;padding:11px 14px;color:#fff;font-size:14px;outline:none" onfocus="this.style.borderColor='#00d4ff'" onblur="this.style.borderColor='#2a3547'">
+          <div id="psi-cpf-err" style="display:none;font-size:11px;color:#ff8080;margin-top:4px"></div>
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:600;color:#8a9ab5;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px">E-mail</label>
+          <input id="psi-email" type="email" placeholder="seu@email.com" style="width:100%;background:#0f1318;border:1px solid #2a3547;border-radius:8px;padding:11px 14px;color:#fff;font-size:14px;outline:none" onfocus="this.style.borderColor='#00d4ff'" onblur="this.style.borderColor='#2a3547'">
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:600;color:#8a9ab5;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px">WhatsApp</label>
+          <input id="psi-tel" type="text" inputmode="numeric" placeholder="(00) 00000-0000" maxlength="15" oninput="mascaraTel(this)" style="width:100%;background:#0f1318;border:1px solid #2a3547;border-radius:8px;padding:11px 14px;color:#fff;font-size:14px;outline:none" onfocus="this.style.borderColor='#00d4ff'" onblur="this.style.borderColor='#2a3547'">
+        </div>
+        <div id="psi-err" style="display:none;background:rgba(255,80,80,.1);border:1px solid rgba(255,80,80,.3);border-radius:8px;padding:10px 14px;font-size:13px;color:#ff8080"></div>
+        <button id="psi-btn" onclick="comprarPsi()" style="width:100%;background:#00d4ff;color:#000;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;padding:15px;border-radius:10px;border:none;cursor:pointer;letter-spacing:.5px;transition:background .2s" onmouseover="this.style.background='#33ddff'" onmouseout="this.style.background='#00d4ff'">
+          Ir para o pagamento — R$ 49,90 →
+        </button>
+        <div style="text-align:center;font-size:11px;color:#8a9ab5">🔒 Mercado Pago · Cartão, PIX ou Boleto · Acesso imediato após confirmação</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function abrirModalPsi(){ document.getElementById('modal-psi').style.display='flex'; document.body.style.overflow='hidden'; }
+  function fecharModalPsi(){ document.getElementById('modal-psi').style.display='none'; document.body.style.overflow=''; }
+  document.getElementById('modal-psi').addEventListener('click', function(e){ if(e.target===this) fecharModalPsi(); });
+
+  async function comprarPsi(){
+    const nome  = document.getElementById('psi-nome').value.trim();
+    const cpf   = document.getElementById('psi-cpf').value.trim();
+    const email = document.getElementById('psi-email').value.trim();
+    const tel   = document.getElementById('psi-tel').value.trim();
+    const errEl = document.getElementById('psi-err');
+    const btn   = document.getElementById('psi-btn');
+    errEl.style.display='none';
+
+    if(!nome){ errEl.textContent='Informe seu nome completo.'; errEl.style.display='block'; return; }
+    const digits = cpf.replace(/\D/g,'');
+    if(digits.length!==11){ errEl.textContent='CPF inválido — verifique e tente novamente.'; errEl.style.display='block'; return; }
+
+    btn.textContent='Aguarde...'; btn.disabled=true;
+    try {
+      const res = await fetch('https://nr-capacita.onrender.com/api/comprar-acesso', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ nome, cpf: digits, email, telefone: tel, curso_id: 14 })
+      });
+      const data = await res.json();
+      if(!res.ok) throw new Error(data.erro || 'Erro ao processar.');
+      if(data.jaLiberado){
+        document.getElementById('psi-form-area').innerHTML=`<div style="text-align:center;padding:20px 0"><div style="font-size:48px;margin-bottom:16px">✅</div><div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:#fff;margin-bottom:8px">Você já tem acesso!</div><p style="color:#8a9ab5;font-size:14px;margin-bottom:20px">Acesse a plataforma com seu CPF e senha para continuar o curso.</p><a href="https://plataforma.safetyeduc.com.br" target="_blank" style="display:inline-block;background:#00d4ff;color:#000;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;padding:14px 28px;border-radius:10px;text-decoration:none">Acessar plataforma →</a></div>`;
+        return;
+      }
+      // Redireciona para o Mercado Pago
+      window.location.href = data.link;
+    } catch(e) {
+      errEl.textContent = e.message || 'Erro inesperado. Tente novamente.';
+      errEl.style.display='block';
+      btn.textContent='Ir para o pagamento — R$ 49,90 →'; btn.disabled=false;
+    }
+  }
+</script>
 
 </body>
 
