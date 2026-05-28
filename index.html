@@ -3459,6 +3459,15 @@
 
     function selPsi() { sel('psicossocial'); }
 
+    // Scroll direto para âncora após carregamento completo (evita deslocamento por animações)
+    window.addEventListener('load', function(){
+      const hash = window.location.hash;
+      if(hash){
+        const el = document.querySelector(hash);
+        if(el){ setTimeout(()=>{ el.scrollIntoView({behavior:'smooth',block:'center'}); }, 400); }
+      }
+    });
+
     function abrirModalPsi(){
       const m = document.getElementById('modal-psi');
       if(m){ m.style.display='flex'; document.body.style.overflow='hidden'; }
