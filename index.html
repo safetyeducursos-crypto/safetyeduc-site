@@ -3777,17 +3777,24 @@
           </div>
 
           <!-- Corpo -->
-          <div style="padding:28px 28px 24px">
+          <div style="padding:0 0 24px">
 
-            <!-- Tag + emoji -->
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-              <div style="font-size:42px;line-height:1">${LANCAMENTO.emoji}</div>
-              <div>
-                <div style="font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:${LANCAMENTO.cor};margin-bottom:4px">${LANCAMENTO.tag}</div>
-                <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:#fff;line-height:1">${LANCAMENTO.nome}</div>
-                <div style="font-size:11px;color:#8a9ab5;margin-top:2px">${LANCAMENTO.tipo}</div>
+            <!-- Hero de lançamento -->
+            <div style="background:linear-gradient(135deg,rgba(0,212,255,.12),rgba(0,60,90,.25));padding:26px 28px 22px;border-bottom:1px solid rgba(0,212,255,.15);text-align:center;position:relative;overflow:hidden">
+              <!-- Brilho de fundo -->
+              <div style="position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:300px;height:150px;background:radial-gradient(ellipse,rgba(0,212,255,.2),transparent 70%);pointer-events:none"></div>
+              <!-- Emoji grande -->
+              <div style="font-size:56px;line-height:1;margin-bottom:10px;position:relative">${LANCAMENTO.emoji}</div>
+              <!-- Tag impactante -->
+              <div style="display:inline-flex;align-items:center;gap:6px;background:${LANCAMENTO.cor};color:#000;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;letter-spacing:3px;text-transform:uppercase;padding:5px 18px;border-radius:100px;margin-bottom:12px">
+                ✦ ${LANCAMENTO.tag} ✦
               </div>
+              <!-- Nome do curso -->
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:38px;font-weight:900;color:#fff;line-height:1.05;position:relative">${LANCAMENTO.nome}</div>
+              <div style="font-size:12px;color:${LANCAMENTO.cor};letter-spacing:2px;text-transform:uppercase;margin-top:5px;font-weight:600">${LANCAMENTO.tipo}</div>
             </div>
+
+            <div style="padding:20px 28px 0">
 
             <!-- Descrição -->
             <p style="font-size:13px;color:#ccc;line-height:1.65;margin-bottom:16px;border-left:3px solid ${LANCAMENTO.cor};padding-left:12px">${LANCAMENTO.descricao}</p>
@@ -3810,7 +3817,7 @@
             <div style="text-align:center;margin-top:14px">
               <button onclick="fecharPopupLancamento()" style="background:none;border:none;color:#555;font-size:12px;cursor:pointer;text-decoration:underline">${LANCAMENTO.btn_fechar}</button>
             </div>
-          </div>
+          </div></div>
         </div>`;
       document.body.appendChild(overlay);
 
