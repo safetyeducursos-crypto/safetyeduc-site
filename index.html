@@ -3457,9 +3457,45 @@
 
     function toggleCurso() { /* mantido para compatibilidade */ }
 
-    function selPsi() {
-      // Seleciona o curso psicossocial no checkout e faz scroll
-      sel('psicossocial');
+    function selPsi() { sel('psicossocial'); }
+
+    function abrirModalPsi(){
+      const m = document.getElementById('modal-psi');
+      if(m){ m.style.display='flex'; document.body.style.overflow='hidden'; }
+    }
+    function fecharModalPsi(){
+      const m = document.getElementById('modal-psi');
+      if(m){ m.style.display='none'; document.body.style.overflow=''; }
+    }
+    async function comprarPsi(){
+      const nome  = (document.getElementById('psi-nome')||{}).value?.trim()||'';
+      const cpf   = (document.getElementById('psi-cpf')||{}).value?.trim()||'';
+      const email = (document.getElementById('psi-email')||{}).value?.trim()||'';
+      const tel   = (document.getElementById('psi-tel')||{}).value?.trim()||'';
+      const errEl = document.getElementById('psi-err');
+      const btn   = document.getElementById('psi-btn');
+      if(errEl) errEl.style.display='none';
+      if(!nome){ if(errEl){errEl.textContent='Informe seu nome completo.';errEl.style.display='block';} return; }
+      const digits = cpf.replace(/\D/g,'');
+      if(digits.length!==11){ if(errEl){errEl.textContent='CPF inválido — verifique e tente novamente.';errEl.style.display='block';} return; }
+      if(btn){ btn.textContent='Aguarde...'; btn.disabled=true; }
+      try {
+        const res = await fetch('https://nr-capacita.onrender.com/api/comprar-acesso', {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ nome, cpf: digits, email, telefone: tel, curso_id: 14 })
+        });
+        const data = await res.json();
+        if(!res.ok) throw new Error(data.erro || 'Erro ao processar.');
+        if(data.jaLiberado){
+          const area = document.getElementById('psi-form-area');
+          if(area) area.innerHTML=`<div style="text-align:center;padding:20px 0"><div style="font-size:48px;margin-bottom:16px">✅</div><div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:#fff;margin-bottom:8px">Você já tem acesso!</div><p style="color:#8a9ab5;font-size:14px;margin-bottom:20px">Acesse a plataforma com seu CPF.</p><a href="https://plataforma.safetyeduc.com.br" target="_blank" style="display:inline-block;background:#00d4ff;color:#000;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;padding:14px 28px;border-radius:10px;text-decoration:none">Acessar plataforma →</a></div>`;
+          return;
+        }
+        window.location.href = data.link;
+      } catch(e) {
+        if(errEl){ errEl.textContent = e.message||'Erro inesperado. Tente novamente.'; errEl.style.display='block'; }
+        if(btn){ btn.textContent='Ir para o pagamento — R$ 49,90 →'; btn.disabled=false; }
+      }
     }
 
     function mascaraCPF(el) {
@@ -3771,45 +3807,6 @@
   </div>
 </div>
 
-<script>
-  function abrirModalPsi(){ document.getElementById('modal-psi').style.display='flex'; document.body.style.overflow='hidden'; }
-  function fecharModalPsi(){ document.getElementById('modal-psi').style.display='none'; document.body.style.overflow=''; }
-  document.getElementById('modal-psi').addEventListener('click', function(e){ if(e.target===this) fecharModalPsi(); });
-
-  async function comprarPsi(){
-    const nome  = document.getElementById('psi-nome').value.trim();
-    const cpf   = document.getElementById('psi-cpf').value.trim();
-    const email = document.getElementById('psi-email').value.trim();
-    const tel   = document.getElementById('psi-tel').value.trim();
-    const errEl = document.getElementById('psi-err');
-    const btn   = document.getElementById('psi-btn');
-    errEl.style.display='none';
-
-    if(!nome){ errEl.textContent='Informe seu nome completo.'; errEl.style.display='block'; return; }
-    const digits = cpf.replace(/\D/g,'');
-    if(digits.length!==11){ errEl.textContent='CPF inválido — verifique e tente novamente.'; errEl.style.display='block'; return; }
-
-    btn.textContent='Aguarde...'; btn.disabled=true;
-    try {
-      const res = await fetch('https://nr-capacita.onrender.com/api/comprar-acesso', {
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ nome, cpf: digits, email, telefone: tel, curso_id: 14 })
-      });
-      const data = await res.json();
-      if(!res.ok) throw new Error(data.erro || 'Erro ao processar.');
-      if(data.jaLiberado){
-        document.getElementById('psi-form-area').innerHTML=`<div style="text-align:center;padding:20px 0"><div style="font-size:48px;margin-bottom:16px">✅</div><div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:#fff;margin-bottom:8px">Você já tem acesso!</div><p style="color:#8a9ab5;font-size:14px;margin-bottom:20px">Acesse a plataforma com seu CPF e senha para continuar o curso.</p><a href="https://plataforma.safetyeduc.com.br" target="_blank" style="display:inline-block;background:#00d4ff;color:#000;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;padding:14px 28px;border-radius:10px;text-decoration:none">Acessar plataforma →</a></div>`;
-        return;
-      }
-      // Redireciona para o Mercado Pago
-      window.location.href = data.link;
-    } catch(e) {
-      errEl.textContent = e.message || 'Erro inesperado. Tente novamente.';
-      errEl.style.display='block';
-      btn.textContent='Ir para o pagamento — R$ 49,90 →'; btn.disabled=false;
-    }
-  }
-</script>
 
 </body>
 
