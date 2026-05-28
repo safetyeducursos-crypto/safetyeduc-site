@@ -3732,6 +3732,108 @@
         document.getElementById('form-cadastro').scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 300);
     })();
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // POPUP DE LANÇAMENTO — configure aqui para cada novo curso
+    // Troque apenas este objeto para promover outro curso no futuro
+    // ─────────────────────────────────────────────────────────────────────────
+    const LANCAMENTO = {
+      versao:    'psi-2026-v1',           // mude para reexibir o popup (ex: nr33-2026-v1)
+      reexibir:  72,                       // horas antes de mostrar novamente para quem já fechou
+      emoji:     '🧠',
+      tag:       'Novo curso disponível',
+      nome:      'Riscos Psicossociais',
+      tipo:      'Capacitação Profissional',
+      urgencia:  'Obrigatório a partir de 26/05/2026 — Portaria MTE 1.419/2024',
+      descricao: 'Entenda tudo de forma prática e dinâmica — dos 13 fatores de risco até a implantação real na sua empresa. Adeque-se antes que comecem as multas.',
+      itens:     ['Identificação dos 13 fatores de risco do MTE','Como atualizar o PGR para a fiscalização','Prazos, multas e responsabilidades legais','6 módulos · 8 horas · certificado incluso'],
+      preco:     'R$ 49,90',
+      preco_sub: 'taxa única · certificado incluso · acesso imediato',
+      cor:       '#00d4ff',
+      link:      '#psicossocial',
+      btn_cta:   'Quero me capacitar →',
+      btn_fechar:'Continuar navegando',
+    };
+
+    (function iniciarPopupLancamento() {
+      const chave = 'se_popup_' + LANCAMENTO.versao;
+      const visto = localStorage.getItem(chave);
+      if (visto) {
+        const diff = (Date.now() - parseInt(visto)) / 3600000;
+        if (diff < LANCAMENTO.reexibir) return;
+      }
+
+      // Injeta HTML do popup
+      const overlay = document.createElement('div');
+      overlay.id = 'popup-lancamento';
+      overlay.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:99999;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px);opacity:0;transition:opacity .4s';
+      overlay.innerHTML = `
+        <div style="background:linear-gradient(145deg,#0d1220,#0a1628);border:1px solid rgba(0,212,255,.35);border-radius:22px;max-width:520px;width:100%;overflow:hidden;position:relative;box-shadow:0 40px 100px rgba(0,212,255,.15),0 0 0 1px rgba(0,212,255,.1);transform:translateY(24px);transition:transform .4s" id="popup-card">
+
+          <!-- Faixa topo urgência -->
+          <div style="background:linear-gradient(90deg,#003d52,#005f7a);padding:9px 22px;display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:12px;color:#ccc;font-weight:500">⚠️ ${LANCAMENTO.urgencia}</span>
+            <button onclick="fecharPopupLancamento()" style="background:rgba(255,255,255,.1);border:none;color:#aaa;width:26px;height:26px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0">✕</button>
+          </div>
+
+          <!-- Corpo -->
+          <div style="padding:28px 28px 24px">
+
+            <!-- Tag + emoji -->
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+              <div style="font-size:42px;line-height:1">${LANCAMENTO.emoji}</div>
+              <div>
+                <div style="font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:${LANCAMENTO.cor};margin-bottom:4px">${LANCAMENTO.tag}</div>
+                <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:#fff;line-height:1">${LANCAMENTO.nome}</div>
+                <div style="font-size:11px;color:#8a9ab5;margin-top:2px">${LANCAMENTO.tipo}</div>
+              </div>
+            </div>
+
+            <!-- Descrição -->
+            <p style="font-size:13px;color:#ccc;line-height:1.65;margin-bottom:16px;border-left:3px solid ${LANCAMENTO.cor};padding-left:12px">${LANCAMENTO.descricao}</p>
+
+            <!-- Itens -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:20px">
+              ${LANCAMENTO.itens.map(i=>`<div style="display:flex;gap:7px;align-items:flex-start"><span style="color:${LANCAMENTO.cor};font-size:11px;margin-top:2px;flex-shrink:0;font-weight:700">✓</span><span style="font-size:11px;color:#bbb;line-height:1.45">${i}</span></div>`).join('')}
+            </div>
+
+            <!-- Preço + CTA -->
+            <div style="background:linear-gradient(135deg,rgba(0,212,255,.08),rgba(0,100,130,.1));border:1px solid rgba(0,212,255,.2);border-radius:12px;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+              <div>
+                <div style="font-size:10px;color:#8a9ab5;text-transform:uppercase;letter-spacing:1px">${LANCAMENTO.preco_sub}</div>
+                <div style="font-family:'Barlow Condensed',sans-serif;font-size:40px;font-weight:900;color:#fff;line-height:1">${LANCAMENTO.preco}</div>
+              </div>
+              <a href="${LANCAMENTO.link}" onclick="fecharPopupLancamento()" style="display:inline-block;background:${LANCAMENTO.cor};color:#000;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;padding:14px 22px;border-radius:10px;text-decoration:none;white-space:nowrap;letter-spacing:.5px;box-shadow:0 6px 20px rgba(0,212,255,.3)">${LANCAMENTO.btn_cta}</a>
+            </div>
+
+            <!-- Link fechar -->
+            <div style="text-align:center;margin-top:14px">
+              <button onclick="fecharPopupLancamento()" style="background:none;border:none;color:#555;font-size:12px;cursor:pointer;text-decoration:underline">${LANCAMENTO.btn_fechar}</button>
+            </div>
+          </div>
+        </div>`;
+      document.body.appendChild(overlay);
+
+      function fecharPopupLancamento() {
+        overlay.style.opacity = '0';
+        document.getElementById('popup-card').style.transform = 'translateY(24px)';
+        setTimeout(() => { overlay.style.display = 'none'; }, 400);
+        localStorage.setItem(chave, Date.now().toString());
+      }
+      window.fecharPopupLancamento = fecharPopupLancamento;
+
+      // Fecha ao clicar fora
+      overlay.addEventListener('click', function(e) { if (e.target === overlay) fecharPopupLancamento(); });
+
+      // Exibe após 1.8s
+      setTimeout(() => {
+        overlay.style.display = 'flex';
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          overlay.style.opacity = '1';
+          document.getElementById('popup-card').style.transform = 'translateY(0)';
+        }));
+      }, 1800);
+    })();
   </script>
 
 <!-- MODAL INFO CADASTRO -->
