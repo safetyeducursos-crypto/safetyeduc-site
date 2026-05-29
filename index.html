@@ -1543,6 +1543,9 @@
     .ms-opt-t { font-size:13px;font-weight:700;color:#fff }
     .ms-opt-s { font-size:11px;color:rgba(255,255,255,.35);margin-top:1px }
 
+    /* Grid 2 colunas reutilizável (responsivo via media query) */
+    .g2 { display:grid; grid-template-columns:1fr 1fr; gap:8px }
+
     /* legacy (não usado mas evita quebrar outros estilos) */
     .course-opts { display:none }
     .course-opt {
@@ -1894,6 +1897,25 @@
       .hero-nums { justify-content: space-between; gap: 10px }
       .hero-num-item { padding: 0; border: none; flex: 1; text-align: left }
       .hero-num-val { font-size: 32px }
+
+      /* Urgency band — empilha no celular */
+      .urgency { flex-direction: column; gap: 10px; text-align: center; padding: 14px 20px }
+      .urgency-btn { width: 100%; text-align: center; padding: 12px 20px }
+
+      /* Grid de 2 colunas inline → 1 coluna */
+      .g2 { grid-template-columns: 1fr !important }
+
+      /* Seção corporativa (cursos além das NRs) */
+      .corp-h2 { font-size: 26px !important; line-height: 1.2 !important }
+      .plano-card.popular { padding: 24px 20px !important }
+      .plano-card.popular .fr { grid-template-columns: 1fr !important }
+
+      /* CTA psicossocial — preço e botão empilham */
+      .psi-cta { flex-direction: column !important; align-items: stretch !important }
+      .psi-cta button { width: 100% !important; font-size: 16px !important; padding: 14px 20px !important }
+
+      /* Faixa topo do card psicossocial */
+      .psi-topbar { flex-direction: column !important; align-items: flex-start !important; gap: 8px !important }
     }
   </style>
 </head>
@@ -2667,7 +2689,7 @@
       </div>
 
       <div style="text-align:center;margin-bottom:48px">
-        <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:42px;font-weight:900;color:#fff;line-height:1.1;margin-bottom:12px">
+        <h2 class="corp-h2" style="font-family:'Barlow Condensed',sans-serif;font-size:42px;font-weight:900;color:#fff;line-height:1.1;margin-bottom:12px">
           Além das NRs — <em style="color:#00d4ff;font-style:normal">cursos de capacitação profissional</em>
         </h2>
         <p style="font-size:16px;color:#8a9ab5;max-width:560px;margin:0 auto;line-height:1.6">
@@ -2684,7 +2706,7 @@
         <div style="background:#141920;border:1px solid rgba(0,212,255,.3);border-radius:20px;overflow:hidden;position:relative;transition:all .3s" onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 32px 64px rgba(0,212,255,.12)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
 
           <!-- Faixa topo com urgência -->
-          <div style="background:linear-gradient(90deg,#003d4d,#005f75);padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px">
+          <div class="psi-topbar" style="background:linear-gradient(90deg,#003d4d,#005f75);padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px">
             <div style="display:flex;align-items:center;gap:8px">
               <span style="font-size:14px">⚠️</span>
               <span style="font-size:12px;color:#fff;font-weight:600">Obrigatório a partir de <strong style="color:#00d4ff">26/05/2026</strong> — Portaria MTE 1.419/2024</span>
@@ -2715,7 +2737,7 @@
           <!-- O que você vai dominar -->
           <div style="padding:20px 28px">
             <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#00d4ff;margin-bottom:12px">O que você vai dominar</div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px">
+            <div class="g2" style="margin-bottom:20px">
               <div style="display:flex;gap:8px;align-items:flex-start"><span style="color:#00d4ff;font-size:12px;margin-top:1px;flex-shrink:0">✓</span><span style="font-size:12px;color:#ccc;line-height:1.5">Os 13 fatores de risco do MTE e como reconhecê-los</span></div>
               <div style="display:flex;gap:8px;align-items:flex-start"><span style="color:#00d4ff;font-size:12px;margin-top:1px;flex-shrink:0">✓</span><span style="font-size:12px;color:#ccc;line-height:1.5">Como identificar e avaliar os riscos na sua realidade</span></div>
               <div style="display:flex;gap:8px;align-items:flex-start"><span style="color:#00d4ff;font-size:12px;margin-top:1px;flex-shrink:0">✓</span><span style="font-size:12px;color:#ccc;line-height:1.5">Medidas práticas de controle que realmente funcionam</span></div>
@@ -2734,7 +2756,7 @@
 
             <!-- CTA com preço -->
             <div style="background:linear-gradient(135deg,rgba(0,212,255,.1),rgba(0,100,130,.15));border:1px solid rgba(0,212,255,.25);border-radius:14px;padding:20px 22px">
-              <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+              <div class="psi-cta" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
                 <div>
                   <div style="font-size:11px;color:#8a9ab5;margin-bottom:2px">acesso completo + certificado</div>
                   <div style="display:flex;align-items:baseline;gap:4px">
@@ -2764,7 +2786,7 @@
           <div style="font-size:48px;margin-bottom:16px">🏢</div>
           <div class="plano-nome" style="font-size:28px;margin-bottom:8px">Plano Corporativo</div>
           <div class="plano-desc" style="font-size:16px;margin-bottom:24px">Feito sob medida para a sua equipe</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px;text-align:left">
+          <div class="fr" style="margin-bottom:28px;text-align:left">
             <div style="display:flex;align-items:center;gap:8px;font-size:14px;color:#c8d6e8"><span style="color:#f5c800;font-weight:800">✓</span> Todos os cursos NR disponíveis</div>
             <div style="display:flex;align-items:center;gap:8px;font-size:14px;color:#c8d6e8"><span style="color:#f5c800;font-weight:800">✓</span> Certificados com validade legal</div>
             <div style="display:flex;align-items:center;gap:8px;font-size:14px;color:#c8d6e8"><span style="color:#f5c800;font-weight:800">✓</span> Cotas por curso definidas com você</div>
