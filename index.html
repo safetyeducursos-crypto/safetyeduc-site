@@ -3879,104 +3879,95 @@
 
       const popupStyle = document.createElement('style');
       popupStyle.textContent = `
-        #popup-lancamento { padding: 12px; }
-        #popup-card { max-width: 500px; width: 100%; }
-        .plp-hero { padding: 16px 20px 14px; }
-        .plp-logo { margin-bottom: 10px; }
-        .plp-tag { font-size: 14px; padding: 5px 18px; margin-bottom: 10px; letter-spacing: 2.5px; }
-        .plp-titulo { font-size: 28px; }
-        .plp-sub { font-size: 12px; margin-top: 4px; }
-        .plp-cursos { padding: 14px 18px; gap: 10px; }
-        .plp-curso-card { padding: 14px; }
-        .plp-curso-em { font-size: 28px; }
-        .plp-curso-nr { font-size: 10px; }
-        .plp-curso-nome { font-size: 14px; }
-        .plp-curso-chips { gap: 4px; margin: 8px 0; }
-        .plp-curso-chip { font-size: 9px; padding: 2px 8px; }
-        .plp-curso-btn { font-size: 12px; padding: 8px 12px; }
-        .plp-fechar { font-size: 12px; padding: 10px 18px; margin: 4px 18px 16px; }
+        #popup-lancamento { padding: 16px; }
+        #popup-card { max-width: 440px; width: 100%; }
+        .plp-hero { padding: 22px 24px 18px; }
+        .plp-titulo { font-size: 32px; }
+        .plp-sub { font-size: 13px; }
+        .plp-card-nr { padding: 16px 20px; gap: 16px; }
+        .plp-nr-ico { width: 52px; height: 52px; font-size: 20px; }
+        .plp-nr-label { font-size: 10px; margin-bottom: 3px; }
+        .plp-nr-nome { font-size: 17px; }
+        .plp-nr-meta { font-size: 11px; margin: 5px 0 12px; }
+        .plp-nr-btn { font-size: 14px; padding: 10px 20px; }
+        .plp-fechar-btn { font-size: 12px; padding: 11px 20px; margin: 0 20px 20px; }
         @media (max-width: 480px) {
-          #popup-lancamento { padding: 8px; }
-          .plp-hero { padding: 14px 16px 12px; }
-          .plp-titulo { font-size: 24px; }
-          .plp-cursos { flex-direction: column; padding: 12px 14px; gap: 8px; }
-          .plp-curso-card { padding: 12px; }
-          .plp-fechar { margin: 4px 14px 14px; }
+          #popup-lancamento { padding: 10px; }
+          .plp-hero { padding: 18px 18px 14px; }
+          .plp-titulo { font-size: 26px; }
+          .plp-card-nr { padding: 14px 16px; gap: 14px; }
+          .plp-nr-ico { width: 44px; height: 44px; font-size: 17px; }
+          .plp-nr-nome { font-size: 15px; }
+          .plp-fechar-btn { margin: 0 16px 16px; }
         }
         @media (max-height: 640px) {
           .plp-sub { display: none; }
-          .plp-hero { padding: 10px 20px; }
-          .plp-curso-chips { display: none; }
+          .plp-hero { padding: 12px 24px 10px; }
+          .plp-nr-meta { display: none; }
         }
       `;
       document.head.appendChild(popupStyle);
 
       const overlay = document.createElement('div');
       overlay.id = 'popup-lancamento';
-      overlay.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:99999;align-items:center;justify-content:center;padding:12px;backdrop-filter:blur(6px);opacity:0;transition:opacity .4s';
+      overlay.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:99999;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(6px);opacity:0;transition:opacity .4s';
       overlay.innerHTML = `
-        <div style="background:linear-gradient(145deg,#0d1220,#0a1628);border:1px solid rgba(245,200,0,.3);border-radius:18px;max-width:500px;width:100%;overflow:hidden;position:relative;box-shadow:0 32px 80px rgba(245,200,0,.1);transform:translateY(24px);transition:transform .4s;max-height:92vh;overflow-y:auto" id="popup-card">
+        <div style="background:#0d1117;border:1px solid rgba(245,200,0,.25);border-radius:20px;max-width:440px;width:100%;overflow:hidden;position:relative;box-shadow:0 40px 100px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.04);transform:translateY(24px);transition:transform .4s;max-height:92vh;overflow-y:auto" id="popup-card">
 
           <!-- Faixa topo -->
-          <div style="background:linear-gradient(90deg,#1a1400,#2a2000);padding:7px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:2;border-bottom:1px solid rgba(245,200,0,.2)">
-            <span style="font-size:11px;color:#ccc;font-weight:500">⭐ Novos cursos disponíveis na plataforma — acesso gratuito</span>
-            <button onclick="fecharPopupLancamento()" style="background:rgba(255,255,255,.1);border:none;color:#aaa;width:24px;height:24px;border-radius:50%;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0">✕</button>
+          <div style="background:#f5c800;padding:8px 20px;display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:11px;color:#000;font-weight:700;letter-spacing:.3px">⭐ Novos cursos disponíveis — acesso gratuito</span>
+            <button onclick="fecharPopupLancamento()" style="background:rgba(0,0,0,.15);border:none;color:#000;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:700">✕</button>
           </div>
 
           <!-- Hero -->
-          <div class="plp-hero" style="background:linear-gradient(135deg,rgba(245,200,0,.08),rgba(245,200,0,.02));border-bottom:1px solid rgba(245,200,0,.1);text-align:center;position:relative;overflow:hidden">
-            <div style="position:absolute;top:-30px;left:50%;transform:translateX(-50%);width:300px;height:120px;background:radial-gradient(ellipse,rgba(245,200,0,.12),transparent 70%);pointer-events:none"></div>
+          <div class="plp-hero" style="text-align:center;border-bottom:1px solid rgba(255,255,255,.06)">
             <!-- Logo -->
-            <div class="plp-logo" style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:5px 14px 5px 8px">
-              <div style="width:24px;height:24px;background:#f5c800;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-                <svg viewBox="0 0 64 64" fill="none" width="14" height="14"><path d="M16 38 Q16 22 32 20 Q48 22 48 38 Z" fill="#000"/><rect x="14" y="37" width="36" height="5" rx="2.5" fill="#000"/></svg>
+            <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:100px;padding:5px 14px 5px 8px;margin-bottom:16px">
+              <div style="width:22px;height:22px;background:#f5c800;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <svg viewBox="0 0 64 64" fill="none" width="12" height="12"><path d="M16 38 Q16 22 32 20 Q48 22 48 38 Z" fill="#000"/><rect x="14" y="37" width="36" height="5" rx="2.5" fill="#000"/></svg>
               </div>
-              <span style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;color:#fff;letter-spacing:1px">SAFETY<span style="color:#f5c800">EDUC</span> <span style="font-weight:400;color:#aaa;font-size:10px">Online</span></span>
+              <span style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:900;color:#fff;letter-spacing:1px">SAFETY<span style="color:#f5c800">EDUC</span> <span style="font-weight:400;color:#666;font-size:10px">Online</span></span>
             </div>
-            <!-- Tag -->
-            <div style="display:block;margin:10px 0 8px">
-              <span class="plp-tag" style="display:inline-block;background:#f5c800;color:#000;font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;border-radius:5px">🎉 Lançamento 2025</span>
-            </div>
-            <!-- Título -->
-            <div class="plp-titulo" style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#fff;line-height:1.05">Novos cursos disponíveis!</div>
-            <div class="plp-sub" style="color:#8a9ab5;margin-top:5px;font-size:13px">NR-01 e NR-31 já estão na plataforma — comece agora, <strong style="color:#f5c800">gratuitamente</strong>.</div>
+            <div class="plp-titulo" style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#fff;line-height:1;margin-bottom:8px">Novos cursos<br>disponíveis! 🎉</div>
+            <div class="plp-sub" style="color:#6b7a93;line-height:1.5">NR-01 e NR-31 já estão na plataforma.<br>Comece agora, <strong style="color:#f5c800">completamente grátis</strong>.</div>
           </div>
 
-          <!-- Cards dos cursos -->
-          <div class="plp-cursos" style="display:flex;padding:16px 18px;gap:10px">
+          <!-- Cards -->
+          <div style="padding:16px 20px;display:flex;flex-direction:column;gap:10px">
 
             <!-- NR-01 -->
-            <div class="plp-curso-card" style="flex:1;background:rgba(245,200,0,.06);border:1px solid rgba(245,200,0,.2);border-radius:12px;display:flex;flex-direction:column;align-items:center;text-align:center">
-              <div class="plp-curso-em" style="line-height:1;margin-bottom:6px">📋</div>
-              <div class="plp-curso-nr" style="color:#f5c800;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:3px">NR-01 · GRO/PGR</div>
-              <div class="plp-curso-nome" style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#fff;line-height:1.15;margin-bottom:6px">Disposições Gerais e Gerenciamento de Riscos</div>
-              <div class="plp-curso-chips" style="display:flex;flex-wrap:wrap;justify-content:center;gap:4px;margin:6px 0 10px">
-                <span class="plp-curso-chip" style="background:rgba(245,200,0,.1);color:#f5c800;border:1px solid rgba(245,200,0,.2);border-radius:100px;font-size:9px;font-weight:600;padding:2px 8px">🕐 8h</span>
-                <span class="plp-curso-chip" style="background:rgba(245,200,0,.1);color:#f5c800;border:1px solid rgba(245,200,0,.2);border-radius:100px;font-size:9px;font-weight:600;padding:2px 8px">📚 6 módulos</span>
-                <span class="plp-curso-chip" style="background:rgba(245,200,0,.1);color:#f5c800;border:1px solid rgba(245,200,0,.2);border-radius:100px;font-size:9px;font-weight:600;padding:2px 8px">🆓 Grátis</span>
+            <div class="plp-card-nr" style="display:flex;align-items:center;background:rgba(245,200,0,.06);border:1px solid rgba(245,200,0,.18);border-radius:14px">
+              <div class="plp-nr-ico" style="background:#f5c800;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;flex-direction:column;line-height:1">
+                <span style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#000;font-size:8px;letter-spacing:1px">NR</span>
+                <span style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#000;font-size:22px;line-height:1">01</span>
               </div>
-              <a href="#nr01" onclick="fecharPopupLancamento()" class="plp-curso-btn" style="display:block;width:100%;background:#f5c800;color:#000;font-family:'Barlow Condensed',sans-serif;font-weight:900;border-radius:8px;text-decoration:none;letter-spacing:.5px;padding:9px 10px;font-size:13px;box-sizing:border-box">Começar grátis →</a>
+              <div style="flex:1;min-width:0">
+                <div class="plp-nr-label" style="color:#f5c800;font-weight:700;letter-spacing:2px;text-transform:uppercase">GRO / PGR</div>
+                <div class="plp-nr-nome" style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#fff;line-height:1.2">Disposições Gerais e<br>Gerenciamento de Riscos</div>
+                <div class="plp-nr-meta" style="color:#6b7a93">8 horas · 6 módulos · Validade 2 anos · <strong style="color:#f5c800">Grátis</strong></div>
+                <a href="#nr01" onclick="fecharPopupLancamento()" class="plp-nr-btn" style="display:inline-block;background:#f5c800;color:#000;font-family:'Barlow Condensed',sans-serif;font-weight:900;border-radius:8px;text-decoration:none;letter-spacing:.3px">Começar grátis →</a>
+              </div>
             </div>
 
             <!-- NR-31 -->
-            <div class="plp-curso-card" style="flex:1;background:rgba(100,200,100,.06);border:1px solid rgba(100,200,100,.2);border-radius:12px;display:flex;flex-direction:column;align-items:center;text-align:center">
-              <div class="plp-curso-em" style="line-height:1;margin-bottom:6px">🌱</div>
-              <div class="plp-curso-nr" style="color:#6dffb0;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:3px">NR-31 · Rural</div>
-              <div class="plp-curso-nome" style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#fff;line-height:1.15;margin-bottom:6px">Segurança no Trabalho Rural e Agricultura</div>
-              <div class="plp-curso-chips" style="display:flex;flex-wrap:wrap;justify-content:center;gap:4px;margin:6px 0 10px">
-                <span class="plp-curso-chip" style="background:rgba(100,200,100,.1);color:#6dffb0;border:1px solid rgba(100,200,100,.2);border-radius:100px;font-size:9px;font-weight:600;padding:2px 8px">🕐 8h</span>
-                <span class="plp-curso-chip" style="background:rgba(100,200,100,.1);color:#6dffb0;border:1px solid rgba(100,200,100,.2);border-radius:100px;font-size:9px;font-weight:600;padding:2px 8px">📚 6 módulos</span>
-                <span class="plp-curso-chip" style="background:rgba(100,200,100,.1);color:#6dffb0;border:1px solid rgba(100,200,100,.2);border-radius:100px;font-size:9px;font-weight:600;padding:2px 8px">🆓 Grátis</span>
+            <div class="plp-card-nr" style="display:flex;align-items:center;background:rgba(109,255,176,.05);border:1px solid rgba(109,255,176,.15);border-radius:14px">
+              <div class="plp-nr-ico" style="background:#6dffb0;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;flex-direction:column;line-height:1">
+                <span style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#000;font-size:8px;letter-spacing:1px">NR</span>
+                <span style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#000;font-size:22px;line-height:1">31</span>
               </div>
-              <a href="#nr31" onclick="fecharPopupLancamento()" class="plp-curso-btn" style="display:block;width:100%;background:#6dffb0;color:#000;font-family:'Barlow Condensed',sans-serif;font-weight:900;border-radius:8px;text-decoration:none;letter-spacing:.5px;padding:9px 10px;font-size:13px;box-sizing:border-box">Começar grátis →</a>
+              <div style="flex:1;min-width:0">
+                <div class="plp-nr-label" style="color:#6dffb0;font-weight:700;letter-spacing:2px;text-transform:uppercase">Trabalho Rural</div>
+                <div class="plp-nr-nome" style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#fff;line-height:1.2">Segurança e Saúde<br>no Trabalho Rural</div>
+                <div class="plp-nr-meta" style="color:#6b7a93">8 horas · 6 módulos · Validade 2 anos · <strong style="color:#6dffb0">Grátis</strong></div>
+                <a href="#nr31" onclick="fecharPopupLancamento()" class="plp-nr-btn" style="display:inline-block;background:#6dffb0;color:#000;font-family:'Barlow Condensed',sans-serif;font-weight:900;border-radius:8px;text-decoration:none;letter-spacing:.3px">Começar grátis →</a>
+              </div>
             </div>
 
           </div>
 
           <!-- Fechar -->
-          <div style="text-align:center">
-            <button onclick="fecharPopupLancamento()" class="plp-fechar" style="display:block;width:calc(100% - 36px);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#aaa;cursor:pointer;border-radius:8px;font-family:'Barlow',sans-serif">← Ver todos os cursos disponíveis</button>
-          </div>
+          <button onclick="fecharPopupLancamento()" class="plp-fechar-btn" style="display:block;width:calc(100% - 40px);background:transparent;border:1px solid rgba(255,255,255,.08);color:#4a5568;cursor:pointer;border-radius:10px;font-family:'Barlow',sans-serif;text-align:center">← Ver todos os cursos disponíveis</button>
 
         </div>`;
       document.body.appendChild(overlay);
