@@ -2231,7 +2231,7 @@
       <div class="cursos-grid reveal">
         <!-- NR-01 GRO -->
         <div class="curso-card hot" id="nr01">
-          <div class="curso-hot-tag">Atualizado 2025</div>
+          <div class="curso-hot-tag">Novo 2025</div>
           <div class="curso-header">
             <span class="curso-em"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" width="72" height="72"><rect x="8" y="8" width="44" height="44" rx="5" fill="#f5c800" stroke="#1a1a1a" stroke-width="2.5" transform="rotate(45 30 30)"/><rect x="12" y="12" width="36" height="36" rx="3" fill="none" stroke="#1a1a1a" stroke-width="1.5" transform="rotate(45 30 30)"/><text x="30" y="24" font-family="Arial Black,Arial,sans-serif" font-size="8" font-weight="900" text-anchor="middle" fill="#1a1a1a" letter-spacing="1">NR</text><text x="30" y="39" font-family="Arial Black,Arial,sans-serif" font-size="15" font-weight="900" text-anchor="middle" fill="#1a1a1a">01</text></svg></span>
             <div class="curso-nr-tag">NR-01 · GRO/PGR</div>
@@ -2553,7 +2553,7 @@
 
         <!-- NR-31 -->
         <div class="curso-card hot" id="nr31">
-          <div class="curso-hot-tag">Atualizado 2024</div>
+          <div class="curso-hot-tag">Novo 2025</div>
           <div class="curso-header">
             <span class="curso-em"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" width="72" height="72"><rect x="8" y="8" width="44" height="44" rx="5" fill="#f5c800" stroke="#1a1a1a" stroke-width="2.5" transform="rotate(45 30 30)"/><rect x="12" y="12" width="36" height="36" rx="3" fill="none" stroke="#1a1a1a" stroke-width="1.5" transform="rotate(45 30 30)"/><text x="30" y="24" font-family="Arial Black,Arial,sans-serif" font-size="8" font-weight="900" text-anchor="middle" fill="#1a1a1a" letter-spacing="1">NR</text><text x="30" y="39" font-family="Arial Black,Arial,sans-serif" font-size="15" font-weight="900" text-anchor="middle" fill="#1a1a1a">31</text></svg></span>
             <div class="curso-nr-tag">NR-31 · Trabalho Rural</div>
@@ -3865,132 +3865,119 @@
 
     // ─────────────────────────────────────────────────────────────────────────
     // POPUP DE LANÇAMENTO — configure aqui para cada novo curso
-    // Troque apenas este objeto para promover outro curso no futuro
+    // Troque versao para reexibir o popup para todos os visitantes
     // ─────────────────────────────────────────────────────────────────────────
-    const LANCAMENTO = {
-      versao:    'psi-2026-v1',           // mude para reexibir o popup (ex: nr33-2026-v1)
-      reexibir:  72,                       // horas antes de mostrar novamente para quem já fechou
-      emoji:     '🧠',
-      tag:       'Novo curso disponível',
-      nome:      'Riscos Psicossociais',
-      tipo:      'Capacitação Profissional',
-      urgencia:  'Obrigatório a partir de 26/05/2026 — Portaria MTE 1.419/2024',
-      descricao: 'Entenda tudo de forma prática e dinâmica — dos 13 fatores de risco até a implantação real na sua empresa. Adeque-se antes que comecem as multas.',
-      itens:     ['Identificação dos 13 fatores de risco do MTE','Como atualizar o PGR para a fiscalização','Prazos, multas e responsabilidades legais','6 módulos · 8 horas · certificado incluso'],
-      preco:     'R$ 49,90',
-      preco_sub: 'taxa única · certificado incluso · acesso imediato',
-      cor:       '#00d4ff',
-      link:      '#psicossocial',
-      btn_cta:   'Quero me capacitar →',
-      btn_fechar:'Ver todos os cursos disponíveis',
-    };
-
     (function iniciarPopupLancamento() {
-      const chave = 'se_popup_' + LANCAMENTO.versao;
-      const visto = localStorage.getItem(chave);
+      const versao   = 'novos-nr01-nr31-2025-v1';
+      const reexibir = 168; // horas (7 dias)
+      const chave    = 'se_popup_' + versao;
+      const visto    = localStorage.getItem(chave);
       if (visto) {
         const diff = (Date.now() - parseInt(visto)) / 3600000;
-        if (diff < LANCAMENTO.reexibir) return;
+        if (diff < reexibir) return;
       }
 
-      // CSS responsivo do popup
       const popupStyle = document.createElement('style');
       popupStyle.textContent = `
         #popup-lancamento { padding: 12px; }
-        #popup-card { max-width: 460px; width: 100%; }
-        .plp-hero { padding: 16px 18px 14px; }
-        .plp-logo { margin-bottom: 8px; }
-        .plp-emoji { font-size: 38px; margin-bottom: 7px; }
-        .plp-tag { font-size: 15px; padding: 5px 18px; margin-bottom: 8px; }
-        .plp-nome { font-size: 30px; }
-        .plp-tipo { font-size: 11px; margin-top: 3px; }
-        .plp-body { padding: 14px 18px 0; }
-        .plp-desc { font-size: 12px; margin-bottom: 10px; }
-        .plp-grid { grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 12px; }
-        .plp-preco-row { padding: 11px 14px; gap: 10px; }
-        .plp-preco-val { font-size: 32px; }
-        .plp-cta { font-size: 15px; padding: 11px 18px; }
-        .plp-fechar { font-size: 12px; padding: 9px 18px; margin-top: 10px; }
+        #popup-card { max-width: 500px; width: 100%; }
+        .plp-hero { padding: 16px 20px 14px; }
+        .plp-logo { margin-bottom: 10px; }
+        .plp-tag { font-size: 14px; padding: 5px 18px; margin-bottom: 10px; letter-spacing: 2.5px; }
+        .plp-titulo { font-size: 28px; }
+        .plp-sub { font-size: 12px; margin-top: 4px; }
+        .plp-cursos { padding: 14px 18px; gap: 10px; }
+        .plp-curso-card { padding: 14px; }
+        .plp-curso-em { font-size: 28px; }
+        .plp-curso-nr { font-size: 10px; }
+        .plp-curso-nome { font-size: 14px; }
+        .plp-curso-chips { gap: 4px; margin: 8px 0; }
+        .plp-curso-chip { font-size: 9px; padding: 2px 8px; }
+        .plp-curso-btn { font-size: 12px; padding: 8px 12px; }
+        .plp-fechar { font-size: 12px; padding: 10px 18px; margin: 4px 18px 16px; }
         @media (max-width: 480px) {
           #popup-lancamento { padding: 8px; }
-          .plp-hero { padding: 14px 14px 12px; }
-          .plp-emoji { font-size: 32px; margin-bottom: 6px; }
-          .plp-tag { font-size: 13px; letter-spacing: 2px; padding: 4px 14px; }
-          .plp-nome { font-size: 26px; }
-          .plp-body { padding: 12px 14px 0; }
-          .plp-grid { grid-template-columns: 1fr; gap: 5px; margin-bottom: 10px; }
-          .plp-preco-row { flex-direction: column; align-items: stretch; gap: 8px; }
-          .plp-cta { text-align: center; padding: 12px; }
-          .plp-preco-val { font-size: 28px; }
-          .plp-fechar { padding: 9px 14px; }
+          .plp-hero { padding: 14px 16px 12px; }
+          .plp-titulo { font-size: 24px; }
+          .plp-cursos { flex-direction: column; padding: 12px 14px; gap: 8px; }
+          .plp-curso-card { padding: 12px; }
+          .plp-fechar { margin: 4px 14px 14px; }
         }
         @media (max-height: 640px) {
-          .plp-emoji { display: none; }
-          .plp-hero { padding: 10px 18px; }
-          .plp-desc { display: none; }
+          .plp-sub { display: none; }
+          .plp-hero { padding: 10px 20px; }
+          .plp-curso-chips { display: none; }
         }
       `;
       document.head.appendChild(popupStyle);
 
-      // Injeta HTML do popup
       const overlay = document.createElement('div');
       overlay.id = 'popup-lancamento';
       overlay.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:99999;align-items:center;justify-content:center;padding:12px;backdrop-filter:blur(6px);opacity:0;transition:opacity .4s';
       overlay.innerHTML = `
-        <div style="background:linear-gradient(145deg,#0d1220,#0a1628);border:1px solid rgba(0,212,255,.35);border-radius:18px;max-width:460px;width:100%;overflow:hidden;position:relative;box-shadow:0 32px 80px rgba(0,212,255,.12);transform:translateY(24px);transition:transform .4s;max-height:92vh;overflow-y:auto" id="popup-card">
+        <div style="background:linear-gradient(145deg,#0d1220,#0a1628);border:1px solid rgba(245,200,0,.3);border-radius:18px;max-width:500px;width:100%;overflow:hidden;position:relative;box-shadow:0 32px 80px rgba(245,200,0,.1);transform:translateY(24px);transition:transform .4s;max-height:92vh;overflow-y:auto" id="popup-card">
 
-          <!-- Faixa topo urgência -->
-          <div style="background:linear-gradient(90deg,#003d52,#005f7a);padding:7px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:2">
-            <span style="font-size:11px;color:#ccc;font-weight:500">⚠️ ${LANCAMENTO.urgencia}</span>
+          <!-- Faixa topo -->
+          <div style="background:linear-gradient(90deg,#1a1400,#2a2000);padding:7px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:2;border-bottom:1px solid rgba(245,200,0,.2)">
+            <span style="font-size:11px;color:#ccc;font-weight:500">⭐ Novos cursos disponíveis na plataforma — acesso gratuito</span>
             <button onclick="fecharPopupLancamento()" style="background:rgba(255,255,255,.1);border:none;color:#aaa;width:24px;height:24px;border-radius:50%;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0">✕</button>
           </div>
 
-          <!-- Corpo -->
-          <div style="padding:0 0 18px">
-
-            <!-- Hero de lançamento -->
-            <div class="plp-hero" style="background:linear-gradient(135deg,rgba(0,212,255,.1),rgba(0,60,90,.2));border-bottom:1px solid rgba(0,212,255,.12);text-align:center;position:relative;overflow:hidden">
-              <div style="position:absolute;top:-30px;left:50%;transform:translateX(-50%);width:260px;height:120px;background:radial-gradient(ellipse,rgba(0,212,255,.18),transparent 70%);pointer-events:none"></div>
-              <!-- Logo -->
-              <div class="plp-logo" style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:5px 14px 5px 8px">
-                <div style="width:24px;height:24px;background:#f5c800;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-                  <svg viewBox="0 0 64 64" fill="none" width="14" height="14"><path d="M16 38 Q16 22 32 20 Q48 22 48 38 Z" fill="#000"/><rect x="14" y="37" width="36" height="5" rx="2.5" fill="#000"/></svg>
-                </div>
-                <span style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;color:#fff;letter-spacing:1px">SAFETY<span style="color:#f5c800">EDUC</span> <span style="font-weight:400;color:#aaa;font-size:10px">Online</span></span>
+          <!-- Hero -->
+          <div class="plp-hero" style="background:linear-gradient(135deg,rgba(245,200,0,.08),rgba(245,200,0,.02));border-bottom:1px solid rgba(245,200,0,.1);text-align:center;position:relative;overflow:hidden">
+            <div style="position:absolute;top:-30px;left:50%;transform:translateX(-50%);width:300px;height:120px;background:radial-gradient(ellipse,rgba(245,200,0,.12),transparent 70%);pointer-events:none"></div>
+            <!-- Logo -->
+            <div class="plp-logo" style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:5px 14px 5px 8px">
+              <div style="width:24px;height:24px;background:#f5c800;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <svg viewBox="0 0 64 64" fill="none" width="14" height="14"><path d="M16 38 Q16 22 32 20 Q48 22 48 38 Z" fill="#000"/><rect x="14" y="37" width="36" height="5" rx="2.5" fill="#000"/></svg>
               </div>
-              <!-- Emoji -->
-              <div class="plp-emoji" style="line-height:1;position:relative">${LANCAMENTO.emoji}</div>
-              <!-- Tag -->
-              <div class="plp-tag" style="display:inline-block;background:${LANCAMENTO.cor};color:#000;font-family:'Barlow Condensed',sans-serif;font-weight:900;letter-spacing:3px;text-transform:uppercase;border-radius:5px">${LANCAMENTO.tag}</div>
-              <!-- Nome -->
-              <div class="plp-nome" style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#fff;line-height:1.05;position:relative">${LANCAMENTO.nome}</div>
-              <div class="plp-tipo" style="color:${LANCAMENTO.cor};letter-spacing:2px;text-transform:uppercase;font-weight:600">${LANCAMENTO.tipo}</div>
+              <span style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;color:#fff;letter-spacing:1px">SAFETY<span style="color:#f5c800">EDUC</span> <span style="font-weight:400;color:#aaa;font-size:10px">Online</span></span>
             </div>
-
-            <div class="plp-body" style="padding:16px 18px 0">
-
-            <!-- Descrição -->
-            <p class="plp-desc" style="color:#ccc;line-height:1.6;border-left:3px solid ${LANCAMENTO.cor};padding-left:10px">${LANCAMENTO.descricao}</p>
-
-            <!-- Itens -->
-            <div class="plp-grid" style="display:grid;margin-bottom:14px">
-              ${LANCAMENTO.itens.map(i=>`<div style="display:flex;gap:6px;align-items:flex-start"><span style="color:${LANCAMENTO.cor};font-size:10px;margin-top:2px;flex-shrink:0;font-weight:700">✓</span><span style="font-size:10px;color:#bbb;line-height:1.4">${i}</span></div>`).join('')}
+            <!-- Tag -->
+            <div style="display:block;margin:10px 0 8px">
+              <span class="plp-tag" style="display:inline-block;background:#f5c800;color:#000;font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;border-radius:5px">🎉 Lançamento 2025</span>
             </div>
+            <!-- Título -->
+            <div class="plp-titulo" style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#fff;line-height:1.05">Novos cursos disponíveis!</div>
+            <div class="plp-sub" style="color:#8a9ab5;margin-top:5px;font-size:13px">NR-01 e NR-31 já estão na plataforma — comece agora, <strong style="color:#f5c800">gratuitamente</strong>.</div>
+          </div>
 
-            <!-- Preço + CTA -->
-            <div class="plp-preco-row" style="background:linear-gradient(135deg,rgba(0,212,255,.08),rgba(0,100,130,.1));border:1px solid rgba(0,212,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap">
-              <div>
-                <div style="font-size:9px;color:#8a9ab5;text-transform:uppercase;letter-spacing:1px">${LANCAMENTO.preco_sub}</div>
-                <div class="plp-preco-val" style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#fff;line-height:1">${LANCAMENTO.preco}</div>
+          <!-- Cards dos cursos -->
+          <div class="plp-cursos" style="display:flex;padding:16px 18px;gap:10px">
+
+            <!-- NR-01 -->
+            <div class="plp-curso-card" style="flex:1;background:rgba(245,200,0,.06);border:1px solid rgba(245,200,0,.2);border-radius:12px;display:flex;flex-direction:column;align-items:center;text-align:center">
+              <div class="plp-curso-em" style="line-height:1;margin-bottom:6px">📋</div>
+              <div class="plp-curso-nr" style="color:#f5c800;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:3px">NR-01 · GRO/PGR</div>
+              <div class="plp-curso-nome" style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#fff;line-height:1.15;margin-bottom:6px">Disposições Gerais e Gerenciamento de Riscos</div>
+              <div class="plp-curso-chips" style="display:flex;flex-wrap:wrap;justify-content:center;gap:4px;margin:6px 0 10px">
+                <span class="plp-curso-chip" style="background:rgba(245,200,0,.1);color:#f5c800;border:1px solid rgba(245,200,0,.2);border-radius:100px;font-size:9px;font-weight:600;padding:2px 8px">🕐 8h</span>
+                <span class="plp-curso-chip" style="background:rgba(245,200,0,.1);color:#f5c800;border:1px solid rgba(245,200,0,.2);border-radius:100px;font-size:9px;font-weight:600;padding:2px 8px">📚 6 módulos</span>
+                <span class="plp-curso-chip" style="background:rgba(245,200,0,.1);color:#f5c800;border:1px solid rgba(245,200,0,.2);border-radius:100px;font-size:9px;font-weight:600;padding:2px 8px">🆓 Grátis</span>
               </div>
-              <a href="${LANCAMENTO.link}" onclick="fecharPopupLancamento()" class="plp-cta" style="display:block;background:${LANCAMENTO.cor};color:#000;font-family:'Barlow Condensed',sans-serif;font-weight:900;border-radius:9px;text-decoration:none;letter-spacing:.5px;box-shadow:0 4px 16px rgba(0,212,255,.3)">${LANCAMENTO.btn_cta}</a>
+              <a href="#nr01" onclick="fecharPopupLancamento()" class="plp-curso-btn" style="display:block;width:100%;background:#f5c800;color:#000;font-family:'Barlow Condensed',sans-serif;font-weight:900;border-radius:8px;text-decoration:none;letter-spacing:.5px;padding:9px 10px;font-size:13px;box-sizing:border-box">Começar grátis →</a>
             </div>
 
-            <!-- Link fechar -->
-            <div style="text-align:center;margin-top:14px">
-              <button onclick="fecharPopupLancamento()" class="plp-fechar" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#aaa;cursor:pointer;border-radius:8px;width:100%;font-family:'Barlow',sans-serif">← ${LANCAMENTO.btn_fechar}</button>
+            <!-- NR-31 -->
+            <div class="plp-curso-card" style="flex:1;background:rgba(100,200,100,.06);border:1px solid rgba(100,200,100,.2);border-radius:12px;display:flex;flex-direction:column;align-items:center;text-align:center">
+              <div class="plp-curso-em" style="line-height:1;margin-bottom:6px">🌱</div>
+              <div class="plp-curso-nr" style="color:#6dffb0;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:3px">NR-31 · Rural</div>
+              <div class="plp-curso-nome" style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#fff;line-height:1.15;margin-bottom:6px">Segurança no Trabalho Rural e Agricultura</div>
+              <div class="plp-curso-chips" style="display:flex;flex-wrap:wrap;justify-content:center;gap:4px;margin:6px 0 10px">
+                <span class="plp-curso-chip" style="background:rgba(100,200,100,.1);color:#6dffb0;border:1px solid rgba(100,200,100,.2);border-radius:100px;font-size:9px;font-weight:600;padding:2px 8px">🕐 8h</span>
+                <span class="plp-curso-chip" style="background:rgba(100,200,100,.1);color:#6dffb0;border:1px solid rgba(100,200,100,.2);border-radius:100px;font-size:9px;font-weight:600;padding:2px 8px">📚 6 módulos</span>
+                <span class="plp-curso-chip" style="background:rgba(100,200,100,.1);color:#6dffb0;border:1px solid rgba(100,200,100,.2);border-radius:100px;font-size:9px;font-weight:600;padding:2px 8px">🆓 Grátis</span>
+              </div>
+              <a href="#nr31" onclick="fecharPopupLancamento()" class="plp-curso-btn" style="display:block;width:100%;background:#6dffb0;color:#000;font-family:'Barlow Condensed',sans-serif;font-weight:900;border-radius:8px;text-decoration:none;letter-spacing:.5px;padding:9px 10px;font-size:13px;box-sizing:border-box">Começar grátis →</a>
             </div>
-          </div></div>
+
+          </div>
+
+          <!-- Fechar -->
+          <div style="text-align:center">
+            <button onclick="fecharPopupLancamento()" class="plp-fechar" style="display:block;width:calc(100% - 36px);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#aaa;cursor:pointer;border-radius:8px;font-family:'Barlow',sans-serif">← Ver todos os cursos disponíveis</button>
+          </div>
+
         </div>`;
       document.body.appendChild(overlay);
 
@@ -4002,10 +3989,8 @@
       }
       window.fecharPopupLancamento = fecharPopupLancamento;
 
-      // Fecha ao clicar fora
       overlay.addEventListener('click', function(e) { if (e.target === overlay) fecharPopupLancamento(); });
 
-      // Exibe após 1.8s
       setTimeout(() => {
         overlay.style.display = 'flex';
         requestAnimationFrame(() => requestAnimationFrame(() => {
