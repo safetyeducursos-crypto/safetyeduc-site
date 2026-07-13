@@ -3310,9 +3310,10 @@
             <div id="cad-ok"
               style="display:none;background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.2);border-radius:8px;padding:16px;font-size:14px;color:#6dffb0;margin-bottom:16px;line-height:1.6">
             </div>
+            <ul id="cad-clausulas-nr" style="font-size:12px;color:#8a9ab5;line-height:1.6;margin:0 0 12px 18px;padding:0"></ul>
             <label style="display:flex;align-items:flex-start;gap:10px;font-size:13px;color:#8a9ab5;cursor:pointer;margin-bottom:16px;line-height:1.5">
               <input type="checkbox" id="cad-lgpd" style="margin-top:3px;accent-color:var(--gold);flex-shrink:0">
-              <span>Li e aceito os <strong style="color:#fff">Termos de Uso e Política de Privacidade</strong>. Estou ciente de que os cursos são de capacitação <strong style="color:var(--gold)">exclusivamente teórica</strong> e que a parte prática é obrigatória conforme as NRs aplicáveis, sendo de minha responsabilidade. Autorizo o uso dos meus dados para emissão de certificados e comunicação via WhatsApp, conforme a <strong style="color:#fff">LGPD (Lei 13.709/2018)</strong>. Estou ciente de que <strong style="color:#fff">contas sem pagamento confirmado são excluídas automaticamente após 60 dias de inatividade</strong>, sendo necessário novo cadastro.</span>
+              <span>Li e aceito os <strong style="color:#fff">Termos de Uso e Política de Privacidade</strong>. Estou ciente de que os cursos são de capacitação <strong style="color:var(--gold)">exclusivamente teórica</strong> e que a parte prática é obrigatória conforme as NRs aplicáveis, sendo de minha responsabilidade — incluindo a declaração específica de cada curso selecionado, listada acima. Autorizo o uso dos meus dados para emissão de certificados e comunicação via WhatsApp, conforme a <strong style="color:#fff">LGPD (Lei 13.709/2018)</strong>. Estou ciente de que <strong style="color:#fff">contas sem pagamento confirmado são excluídas automaticamente após 60 dias de inatividade</strong>, sendo necessário novo cadastro.</span>
             </label>
             <button class="btn-pay" id="btn-cadastrar" onclick="cadastrar()">🚀 Criar minha conta grátis</button>
             <div class="pay-trust" style="margin-top:12px">Gratuito · Sem cartão · Acesso imediato na plataforma</div>
@@ -3523,6 +3524,16 @@
     const API_URL = 'https://nr-capacita.onrender.com/api';
 
     const MS_IDS = ['nr01','nr05','nr10','nr11','nr11r','nr12','nr33v','nr33s','nr35','nr34','nr18','nr06','nr20','nr31','nr32'];
+    const NR_LABELS = { nr01:'NR-01', nr05:'NR-5', nr06:'NR-06', nr10:'NR-10', nr11:'NR-11', nr11r:'NR-11 (Reciclagem)', nr12:'NR-12', nr18:'NR-18', nr20:'NR-20', nr31:'NR-31', nr33v:'NR-33 (Vigia)', nr33s:'NR-33 (Supervisor)', nr34:'NR-34', nr35:'NR-35', nr32:'NR-32' };
+
+    function renderClausulasNR() {
+      const el = document.getElementById('cad-clausulas-nr');
+      if (!el) return;
+      const sel = MS_IDS.filter(id => document.getElementById('chk-' + id) && document.getElementById('chk-' + id).checked);
+      el.innerHTML = sel.map(id =>
+        '<li>O certificado de <strong style="color:#fff">' + NR_LABELS[id] + '</strong> emitido ao término do curso comprova apenas a conclusão da capacitação teórica. Ele não substitui, em nenhuma hipótese, a capacitação prática exigida pelas Normas Regulamentadoras aplicáveis.</li>'
+      ).join('');
+    }
 
     function msToggle() {
       const field = document.getElementById('ms-field');
@@ -3564,6 +3575,7 @@
           tags.insertBefore(tag, ph);
         });
       }
+      renderClausulasNR();
     }
 
     // Fechar dropdown ao clicar fora
