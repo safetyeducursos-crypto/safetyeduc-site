@@ -2343,7 +2343,7 @@
         </div>
 
         <!-- NR-10 -->
-        <div class="curso-card">
+        <div class="curso-card" id="nr10">
           <div class="curso-header">
             <span class="curso-em"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" width="72" height="72"><rect x="8" y="8" width="44" height="44" rx="5" fill="#f5c800" stroke="#1a1a1a" stroke-width="2.5" transform="rotate(45 30 30)"/><rect x="12" y="12" width="36" height="36" rx="3" fill="none" stroke="#1a1a1a" stroke-width="1.5" transform="rotate(45 30 30)"/><text x="30" y="24" font-family="Arial Black,Arial,sans-serif" font-size="8" font-weight="900" text-anchor="middle" fill="#1a1a1a" letter-spacing="1">NR</text><text x="30" y="39" font-family="Arial Black,Arial,sans-serif" font-size="15" font-weight="900" text-anchor="middle" fill="#1a1a1a">10</text></svg></span>
             <div class="curso-nr-tag">NR-10 · Básico</div>
@@ -2700,7 +2700,7 @@
         </div>
 
         <!-- NR-35 -->
-        <div class="curso-card hot">
+        <div class="curso-card hot" id="nr35">
           <div class="curso-hot-tag">Atualizado 2025</div>
           <div class="curso-header">
             <span class="curso-em"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" width="72" height="72"><rect x="8" y="8" width="44" height="44" rx="5" fill="#f5c800" stroke="#1a1a1a" stroke-width="2.5" transform="rotate(45 30 30)"/><rect x="12" y="12" width="36" height="36" rx="3" fill="none" stroke="#1a1a1a" stroke-width="1.5" transform="rotate(45 30 30)"/><text x="30" y="24" font-family="Arial Black,Arial,sans-serif" font-size="8" font-weight="900" text-anchor="middle" fill="#1a1a1a" letter-spacing="1">NR</text><text x="30" y="39" font-family="Arial Black,Arial,sans-serif" font-size="15" font-weight="900" text-anchor="middle" fill="#1a1a1a">35</text></svg></span>
@@ -3641,8 +3641,6 @@
 
     function toggleCurso() { /* mantido para compatibilidade */ }
 
-    function selPsi() { sel('psicossocial'); }
-
     // Scroll direto para âncora após carregamento completo (evita deslocamento por animações)
     window.addEventListener('load', function(){
       const hash = window.location.hash;
@@ -3666,11 +3664,13 @@
       const email = (document.getElementById('psi-email')||{}).value?.trim()||'';
       const tel   = (document.getElementById('psi-tel')||{}).value?.trim()||'';
       const errEl = document.getElementById('psi-err');
+      const cpfErrEl = document.getElementById('psi-cpf-err');
       const btn   = document.getElementById('psi-btn');
       if(errEl) errEl.style.display='none';
+      if(cpfErrEl) cpfErrEl.style.display='none';
       if(!nome){ if(errEl){errEl.textContent='Informe seu nome completo.';errEl.style.display='block';} return; }
       const digits = cpf.replace(/\D/g,'');
-      if(digits.length!==11){ if(errEl){errEl.textContent='CPF inválido — verifique e tente novamente.';errEl.style.display='block';} return; }
+      if(digits.length!==11){ if(cpfErrEl){cpfErrEl.textContent='CPF inválido — verifique e tente novamente.';cpfErrEl.style.display='block';} return; }
       if(email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ if(errEl){errEl.textContent='E-mail inválido — verifique o formato.';errEl.style.display='block';} return; }
       const lgpd = document.getElementById('psi-lgpd');
       if(lgpd && !lgpd.checked){ if(errEl){errEl.textContent='Aceite a Política de Privacidade para continuar.';errEl.style.display='block';} return; }
@@ -3698,9 +3698,12 @@
       let v = el.value.replace(/\D/g, '').slice(0, 11);
       v = v.replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d{1,2})$/, '$1-$2');
       el.value = v;
-      // limpa erro inline ao digitar
+      // limpa erro inline ao digitar — função é compartilhada pelo campo de CPF
+      // do cadastro principal (cad-cpf-err) e do modal Riscos Psicossociais (psi-cpf-err)
       const errEl = document.getElementById('cad-cpf-err');
       if (errEl) errEl.style.display = 'none';
+      const psiErrEl = document.getElementById('psi-cpf-err');
+      if (psiErrEl) psiErrEl.style.display = 'none';
     }
     function mascaraTel(el) {
       let v = el.value.replace(/\D/g, '').slice(0, 11);
@@ -3870,16 +3873,6 @@
         if (opt) opt.classList.remove('selected');
       });
       msRenderTags();
-    }
-
-    // ── WhatsApp — número fragmentado para evitar scraping
-    const WHATSAPP_NUM = ['55','48','9917','58291'].join('');
-
-    function abrirWhatsApp(plano) {
-      const msg = encodeURIComponent(
-        'Olá! Tenho interesse no *Plano ' + plano + '* da SafetyEduc. Poderia me passar mais informações?'
-      );
-      window.open('https://wa.me/' + WHATSAPP_NUM + '?text=' + msg, '_blank');
     }
 
     // Scroll reveal
@@ -4111,7 +4104,7 @@
         </div>
         <label style="display:flex;align-items:flex-start;gap:8px;cursor:pointer;margin-top:2px">
           <input type="checkbox" id="psi-lgpd" style="margin-top:2px;accent-color:#00d4ff;width:14px;height:14px;flex-shrink:0">
-          <span style="font-size:11px;color:#8a9ab5;line-height:1.5">Li e concordo com a <a href="#" onclick="abrirPolitica(event)" style="color:#00d4ff;text-decoration:underline">Política de Privacidade</a> e autorizo o uso dos meus dados para acesso ao curso e emissão do certificado, conforme a <strong style="color:#ccc">LGPD (Lei 13.709/2018)</strong>.</span>
+          <span style="font-size:11px;color:#8a9ab5;line-height:1.5">Li e concordo com a <a href="#" onclick="event.preventDefault();abrirModalLegal('privacidade')" style="color:#00d4ff;text-decoration:underline">Política de Privacidade</a> e autorizo o uso dos meus dados para acesso ao curso e emissão do certificado, conforme a <strong style="color:#ccc">LGPD (Lei 13.709/2018)</strong>.</span>
         </label>
         <div id="psi-err" style="display:none;background:rgba(255,80,80,.1);border:1px solid rgba(255,80,80,.3);border-radius:8px;padding:10px 14px;font-size:13px;color:#ff8080"></div>
         <button id="psi-btn" onclick="comprarPsi()" style="width:100%;background:#00d4ff;color:#000;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;padding:15px;border-radius:10px;border:none;cursor:pointer;letter-spacing:.5px;transition:background .2s" onmouseover="this.style.background='#33ddff'" onmouseout="this.style.background='#00d4ff'">
