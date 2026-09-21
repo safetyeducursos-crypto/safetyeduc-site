@@ -55,6 +55,10 @@
       scroll-behavior: smooth
     }
 
+    html {
+      overflow-x: hidden
+    }
+
     body {
       font-family: 'Barlow', sans-serif;
       background: var(--bg);
@@ -71,6 +75,22 @@
       pointer-events: none;
       z-index: 0;
       opacity: .4
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 8px;
+      z-index: 2000;
+      background: var(--gold);
+      color: #000;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-weight: 700
+    }
+
+    .skip-link:focus {
+      left: 8px
     }
 
     /* ── NAV ── */
@@ -179,7 +199,8 @@
     .hero-bg {
       position: absolute;
       inset: 0;
-      z-index: 0
+      z-index: 0;
+      overflow: hidden
     }
 
     .hero-glow1 {
@@ -276,7 +297,7 @@
     }
 
     .hero h1 .line3 {
-      color: rgba(255, 255, 255, .25);
+      color: rgba(255, 255, 255, .6);
       display: block;
       font-size: .55em;
       letter-spacing: 4px;
@@ -1923,6 +1944,7 @@
 <body>
 
   <!-- NAV -->
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
   <nav>
     <a href="#home" class="nav-logo" onclick="event.preventDefault();window.scrollTo({top:0,behavior:'smooth'})">
       <div class="nav-logo-mark">
@@ -1948,6 +1970,7 @@
     </div>
   </nav>
 
+  <main id="main">
   <!-- HERO -->
   <section class="hero" id="home">
     <div class="hero-bg">
@@ -3377,24 +3400,24 @@
                 <input type="checkbox" id="chk-nr36" class="sr-only" aria-label="NR-36">
               </div>
             </div>
-            <div class="fg"><label>Nome completo <span style="color:var(--red)">*</span></label><input id="cad-nome" type="text"
+            <div class="fg"><label for="cad-nome">Nome completo <span style="color:var(--red)">*</span></label><input id="cad-nome" type="text"
                 placeholder="Seu nome completo" autocomplete="name" required minlength="3"></div>
             <div class="fr">
               <div class="fg">
-                <label>CPF <span style="color:var(--red)">*</span></label>
+                <label for="cad-cpf">CPF <span style="color:var(--red)">*</span></label>
                 <input id="cad-cpf" type="text" inputmode="numeric" placeholder="000.000.000-00"
                   oninput="mascaraCPF(this)" onblur="validarCPFBlur(this)" autocomplete="off" maxlength="14">
                 <div id="cad-cpf-err" style="display:none;font-size:11px;color:#ff8080;margin-top:3px"></div>
               </div>
-              <div class="fg"><label>Telefone / WhatsApp <span style="color:var(--red)">*</span></label><input id="cad-tel" type="tel"
+              <div class="fg"><label for="cad-tel">Telefone / WhatsApp <span style="color:var(--red)">*</span></label><input id="cad-tel" type="tel"
                   placeholder="(00) 00000-0000" oninput="mascaraTel(this)" autocomplete="tel" required></div>
             </div>
             <div class="fg">
-              <label>E-mail <span style="color:var(--red)">*</span></label>
+              <label for="cad-email">E-mail <span style="color:var(--red)">*</span></label>
               <input id="cad-email" type="email" placeholder="seu@email.com" onblur="validarEmailBlur(this)" autocomplete="email" required>
               <div id="cad-email-err" style="display:none;font-size:11px;color:#ff8080;margin-top:3px"></div>
             </div>
-            <div class="fg"><label>Empresa <span style="font-size:11px;color:#8a9ab5;font-weight:400">(opcional)</span></label><input id="cad-empresa" type="text"
+            <div class="fg"><label for="cad-empresa">Empresa <span style="font-size:11px;color:#8a9ab5;font-weight:400">(opcional)</span></label><input id="cad-empresa" type="text"
                 placeholder="Nome da empresa" autocomplete="organization"></div>
             <div id="cad-err"
               style="display:none;background:rgba(255,61,61,.1);border:1px solid rgba(255,61,61,.3);border-radius:8px;padding:12px 16px;font-size:13px;color:#ff8080;margin-bottom:16px">
@@ -3456,6 +3479,8 @@
   </section>
 
   <!-- FOOTER -->
+  </main>
+
   <footer>
     <div class="footer-inner">
       <div class="footer-grid">
@@ -3660,7 +3685,7 @@
         sel.forEach(id => {
           const tag = document.createElement('span');
           tag.className = 'ms-tag';
-          tag.innerHTML = emMap[id] + ' ' + id.toUpperCase() + ' <span class="ms-tag-x" onclick="msRemove(\'' + id + '\',event)">×</span>';
+          tag.innerHTML = emMap[id] + ' ' + (NR_LABELS[id] || id.toUpperCase()) + ' <span class="ms-tag-x" onclick="msRemove(\'' + id + '\',event)">×</span>';
           tags.insertBefore(tag, ph);
         });
       }
@@ -4133,20 +4158,20 @@
     <div style="padding:24px 28px" id="psi-form-area">
       <div style="display:flex;flex-direction:column;gap:14px">
         <div>
-          <label style="font-size:11px;font-weight:600;color:#8a9ab5;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px">Nome completo <span style="color:#ff5555">*</span></label>
+          <label for="psi-nome" style="font-size:11px;font-weight:600;color:#8a9ab5;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px">Nome completo <span style="color:#ff5555">*</span></label>
           <input id="psi-nome" type="text" placeholder="Seu nome completo" style="width:100%;background:#0f1318;border:1px solid #2a3547;border-radius:8px;padding:11px 14px;color:#fff;font-size:14px;outline:none" onfocus="this.style.borderColor='#00d4ff'" onblur="this.style.borderColor='#2a3547'">
         </div>
         <div>
-          <label style="font-size:11px;font-weight:600;color:#8a9ab5;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px">CPF <span style="color:#ff5555">*</span></label>
+          <label for="psi-cpf" style="font-size:11px;font-weight:600;color:#8a9ab5;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px">CPF <span style="color:#ff5555">*</span></label>
           <input id="psi-cpf" type="text" inputmode="numeric" placeholder="000.000.000-00" maxlength="14" oninput="mascaraCPF(this)" style="width:100%;background:#0f1318;border:1px solid #2a3547;border-radius:8px;padding:11px 14px;color:#fff;font-size:14px;outline:none" onfocus="this.style.borderColor='#00d4ff'" onblur="this.style.borderColor='#2a3547'">
           <div id="psi-cpf-err" style="display:none;font-size:11px;color:#ff8080;margin-top:4px"></div>
         </div>
         <div>
-          <label style="font-size:11px;font-weight:600;color:#8a9ab5;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px">E-mail</label>
+          <label for="psi-email" style="font-size:11px;font-weight:600;color:#8a9ab5;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px">E-mail</label>
           <input id="psi-email" type="email" placeholder="seu@email.com" style="width:100%;background:#0f1318;border:1px solid #2a3547;border-radius:8px;padding:11px 14px;color:#fff;font-size:14px;outline:none" onfocus="this.style.borderColor='#00d4ff'" onblur="this.style.borderColor='#2a3547'">
         </div>
         <div>
-          <label style="font-size:11px;font-weight:600;color:#8a9ab5;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px">WhatsApp</label>
+          <label for="psi-tel" style="font-size:11px;font-weight:600;color:#8a9ab5;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px">WhatsApp</label>
           <input id="psi-tel" type="text" inputmode="numeric" placeholder="(00) 00000-0000" maxlength="15" oninput="mascaraTel(this)" style="width:100%;background:#0f1318;border:1px solid #2a3547;border-radius:8px;padding:11px 14px;color:#fff;font-size:14px;outline:none" onfocus="this.style.borderColor='#00d4ff'" onblur="this.style.borderColor='#2a3547'">
         </div>
         <label style="display:flex;align-items:flex-start;gap:8px;cursor:pointer;margin-top:2px">
