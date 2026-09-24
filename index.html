@@ -3749,7 +3749,7 @@
       if(cpfErrEl) cpfErrEl.style.display='none';
       if(!nome){ if(errEl){errEl.textContent='Informe seu nome completo.';errEl.style.display='block';} return; }
       const digits = cpf.replace(/\D/g,'');
-      if(digits.length!==11){ if(cpfErrEl){cpfErrEl.textContent='CPF inválido — verifique e tente novamente.';cpfErrEl.style.display='block';} return; }
+      if(!cpfValido(digits)){ if(cpfErrEl){cpfErrEl.textContent='CPF inválido — verifique e tente novamente.';cpfErrEl.style.display='block';} return; }
       if(email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ if(errEl){errEl.textContent='E-mail inválido — verifique o formato.';errEl.style.display='block';} return; }
       const lgpd = document.getElementById('psi-lgpd');
       if(lgpd && !lgpd.checked){ if(errEl){errEl.textContent='Aceite a Política de Privacidade para continuar.';errEl.style.display='block';} return; }
@@ -3759,7 +3759,7 @@
           method:'POST', headers:{'Content-Type':'application/json'},
           body: JSON.stringify({ nome, cpf: digits, email, telefone: tel, curso_id: 14 })
         });
-        const data = await res.json();
+        const data = await lerRespostaAPI(res);
         if(!res.ok) throw new Error(data.erro || 'Erro ao processar.');
         if(data.jaLiberado){
           const area = document.getElementById('psi-form-area');
@@ -3771,6 +3771,13 @@
         if(errEl){ errEl.textContent = e.message||'Erro inesperado. Tente novamente.'; errEl.style.display='block'; }
         if(btn){ btn.textContent='Ir para o pagamento — R$ 49,90 →'; btn.disabled=false; }
       }
+    }
+
+    // Lê a resposta da API sem estourar quando o servidor devolve uma página de erro (HTML)
+    // em vez de JSON — ex.: 502 do Render durante reinício. Evita mostrar "Unexpected token <" ao aluno.
+    async function lerRespostaAPI(res) {
+      try { return await res.json(); }
+      catch (_) { return { erro: 'O servidor está temporariamente indisponível. Aguarde alguns segundos e tente novamente.' }; }
     }
 
     function mascaraCPF(el) {
@@ -3883,7 +3890,11 @@
       btn.innerHTML = '<span style="display:inline-flex;align-items:center;gap:8px"><span style="width:16px;height:16px;border:2px solid rgba(0,0,0,.3);border-top-color:#000;border-radius:50%;animation:spin .7s linear infinite;display:inline-block"></span>Criando sua conta...</span>';
 
       const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 15000);
+      // 45s: o servidor pode estar "acordando" (Render) e levar ~30s na primeira requisição
+      const timeout = setTimeout(() => controller.abort(), 45000);
+      const avisoLento = setTimeout(() => {
+        btn.innerHTML = '<span style="display:inline-flex;align-items:center;gap:8px"><span style="width:16px;height:16px;border:2px solid rgba(0,0,0,.3);border-top-color:#000;border-radius:50%;animation:spin .7s linear infinite;display:inline-block"></span>Conectando ao servidor, aguarde...</span>';
+      }, 8000);
 
       try {
         const res = await fetch(API_URL + '/cadastro-publico', {
@@ -3892,22 +3903,32 @@
           body: JSON.stringify({ nome, cpf, telefone: tel, email, empresa: emp, curso_id: curso }),
           signal: controller.signal
         });
-        clearTimeout(timeout);
-        const data = await res.json();
+        clearTimeout(timeout); clearTimeout(avisoLento);
+        const data = await lerRespostaAPI(res);
         if (!res.ok) throw new Error(data.erro || 'Erro ao criar conta');
+        const contaNova = data.novo !== false;
 
-        // Notifica Sofia (fire-and-forget, não bloqueia o fluxo do usuário)
-        fetch('https://telegram-bot-bqsv.onrender.com/platform/cadastro', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ nome, telefone: tel, curso_id: curso })
-        }).catch(() => {});
+        // Notifica Sofia (fire-and-forget, não bloqueia o fluxo do usuário) — só em conta nova,
+        // para não reenviar a mensagem de boas-vindas a quem já tinha cadastro
+        if (contaNova) {
+          fetch('https://telegram-bot-bqsv.onrender.com/platform/cadastro', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nome, telefone: tel, curso_id: curso })
+          }).catch(() => {});
+        }
 
+        const tituloOk = contaNova ? 'Conta criada com sucesso!' : 'Você já tem cadastro!';
+        const textoOk = contaNova
+          ? 'Seu acesso está pronto. Use seu <strong>CPF</strong> como login e senha inicial na plataforma.'
+          : (data.cursosAdicionados > 0
+              ? 'Os cursos selecionados foram adicionados à sua conta. Entre na plataforma com seu <strong>CPF</strong> e a <strong>senha que você já usa</strong>.'
+              : 'Você já está inscrito nos cursos selecionados. Entre na plataforma com seu <strong>CPF</strong> e a <strong>senha que você já usa</strong>.');
         okEl.innerHTML = `
       <div style="text-align:center;padding:8px 0">
         <div style="font-size:28px;margin-bottom:8px">✅</div>
-        <div style="font-size:18px;font-weight:700;margin-bottom:8px">Conta criada com sucesso!</div>
-        <div style="font-size:14px;opacity:.8;margin-bottom:20px">Seu acesso está pronto. Use seu <strong>CPF</strong> como login e senha inicial na plataforma.</div>
+        <div style="font-size:18px;font-weight:700;margin-bottom:8px">${tituloOk}</div>
+        <div style="font-size:14px;opacity:.8;margin-bottom:20px">${textoOk}</div>
         <a href="https://plataforma.safetyeduc.com.br" target="_blank"
           style="display:block;padding:16px;background:var(--gold);color:#000;border-radius:10px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:18px;letter-spacing:1px;text-transform:uppercase;text-decoration:none;margin-bottom:12px">
           🎓 Acessar o curso agora →
@@ -3917,7 +3938,7 @@
         okEl.style.display = 'block';
         btn.style.display = 'none';
       } catch (e) {
-        clearTimeout(timeout);
+        clearTimeout(timeout); clearTimeout(avisoLento);
         if (e.name === 'AbortError') {
           err.textContent = 'O servidor demorou muito para responder. Verifique sua conexão e tente novamente.';
         } else if (e.message === 'Failed to fetch') {
@@ -3934,6 +3955,10 @@
 
     function resetarFormCadastro() {
       _cadastrando = false;
+      // Novo cadastro = outra pessoa: precisa ver e aceitar o aviso de valores de novo
+      _infoAceita = false;
+      const infoChk = document.getElementById('mo-info-check');
+      if (infoChk) infoChk.checked = false;
       document.getElementById('cad-ok').style.display = 'none';
       document.getElementById('cad-err').style.display = 'none';
       const btn = document.getElementById('btn-cadastrar');
